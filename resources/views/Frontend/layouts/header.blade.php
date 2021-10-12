@@ -7,7 +7,11 @@
                 <div class="pull-left flip left-top">
                     <div class="links">
                         <ul>
-                            <li class="mobile"><i class="fa fa-phone"></i>+21 9898777656</li>
+                            <li class="mobile">
+                                <i class="fa fa-phone"></i>
+                                <span>9898777656</span>
+                                <span>21+ </span>
+                            </li>
                             <li class="email"><a href="mailto:info@marketshop.com"><i class="fa fa-envelope"></i>info@marketshop.com</a></li>
                             <li class="wrap_custom_block hidden-sm hidden-xs"><a>بلاک سفارشی<b></b></a>
                                 <div class="dropdown-menu custom_block">
@@ -52,7 +56,7 @@
                 @else
                     <div id="top-links" class="nav pull-right flip m-3">
                         <ul>
-                            <li>   
+                            <li>
                                <div class="dropdown show">
                                   <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                      <span> {{ auth()->user()->name }}</span>
@@ -93,7 +97,6 @@
                         <button type="button" data-toggle="dropdown" data-loading-text="بارگذاری ..." class="heading dropdown-toggle">
                             <span class="cart-icon pull-left flip"></span>
                             @php
-
                               $totalPrice = Cart::all()->sum(function ($cart){
                                        return $cart['product']->price * $cart['quantity'];
                               });
@@ -117,7 +120,6 @@
                              @endif
                         </button>
                           <ul class="dropdown-menu">
-
                              @if(Cart::all()->count())
                                     @foreach(Cart::all() as $cart)
                                          @php
@@ -181,7 +183,6 @@
                                   <li><h4 class="text-center" style="font-weight: bold;">سبد خرید شما خالی است</h4></li>
                              @endif
                         </ul>
-
                     </div>
                 </div>
                 @endauth
@@ -201,161 +202,28 @@
     <!-- Main آقایانu Start-->
 
     <nav id="menu" class="navbar">
-        <div class="navbar-header"> <span class="visible-xs visible-sm"> منو <b></b></span></div>
+{{--        <div class="navbar-header"><span class="visible-xs visible-sm"> منو <b></b></span></div>--}}
         <div class="container">
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                     <li><a class="home_link" title="خانه" href="{{ route('index') }}">خانه</a></li>
-                    <li class="dropdown"><a href="category.html">مد و زیبایی</a>
-                        <div class="dropdown-menu">
-                            <ul>
-                                <li><a href="category.html">آقایان <span>&rsaquo;</span></a>
-                                    <div class="dropdown-menu">
-                                        <ul>
-                                            <li><a href="category.html">زیردسته ها </a> </li>
-                                            <li><a href="category.html">زیردسته ها </a> </li>
-                                            <li><a href="category.html">زیردسته ها </a> </li>
-                                            <li><a href="category.html">زیردسته ها </a> </li>
-                                            <li><a href="category.html">زیردسته جدید </a> </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li><a href="category.html" >بانوان</a> </li>
-                                <li><a href="category.html">دخترانه<span>&rsaquo;</span></a>
-                                    <div class="dropdown-menu">
-                                        <ul>
-                                            <li><a href="category.html">زیردسته ها </a></li>
-                                            <li><a href="category.html">زیردسته جدید</a></li>
-                                            <li><a href="category.html">زیردسته جدید</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li><a href="category.html">پسرانه</a></li>
-                                <li><a href="category.html">نوزاد</a></li>
-                                <li><a href="category.html">لوازم <span>&rsaquo;</span></a>
-                                    <div class="dropdown-menu">
-                                        <ul>
-                                            <li><a href="category.html">زیردسته های جدید</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                    @php
+                      $categoriesParent = \App\Models\Category::where('parent',0)->get();
+                      $sub_categories = \App\Models\Category::where('parent', '!=',0)->get();
+                    @endphp
+                    @foreach($categoriesParent  as $category)
+                    <li class="dropdown">
+                        <a href="#">{{ $category->name }}</a>
+                         @if(count($category->childs) > 0)
+                            <div class="dropdown-menu">
+                                <ul>
+                                   @include('Frontend.layouts.sub_category',['categories' => $category->childs])
+                                </ul>
+                            </div>
+                         @endif
                     </li>
-                    <li class="dropdown"> <a href="category.html">الکترونیکی</a>
-                        <div class="dropdown-menu">
-                            <ul>
-                                <li> <a href="category.html">لپ تاپ <span>&rsaquo;</span></a>
-                                    <div class="dropdown-menu">
-                                        <ul>
-                                            <li> <a href="category.html">زیردسته های جدید </a> </li>
-                                            <li> <a href="category.html">زیردسته های جدید </a> </li>
-                                            <li> <a href="category.html">زیردسته جدید </a> </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li> <a href="category.html">رومیزی <span>&rsaquo;</span></a>
-                                    <div class="dropdown-menu">
-                                        <ul>
-                                            <li> <a href="category.html">زیردسته های جدید </a> </li>
-                                            <li> <a href="category.html">زیردسته جدید </a> </li>
-                                            <li> <a href="category.html">زیردسته جدید </a> </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li> <a href="category.html">دوربین <span>&rsaquo;</span></a>
-                                    <div class="dropdown-menu">
-                                        <ul>
-                                            <li> <a href="category.html">زیردسته های جدید</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li><a href="category.html">موبایل و تبلت <span>&rsaquo;</span></a>
-                                    <div class="dropdown-menu">
-                                        <ul>
-                                            <li><a href="category.html">زیردسته های جدید</a></li>
-                                            <li><a href="category.html">زیردسته های جدید</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li><a href="category.html">صوتی و تصویری <span>&rsaquo;</span></a>
-                                    <div class="dropdown-menu">
-                                        <ul>
-                                            <li><a href="category.html">زیردسته های جدید </a> </li>
-                                            <li><a href="category.html">زیردسته جدید </a> </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li><a href="category.html">لوازم خانگی</a> </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="dropdown"><a href="category.html">کفش</a>
-                        <div class="dropdown-menu">
-                            <ul>
-                                <li><a href="category.html">آقایان</a> </li>
-                                <li><a href="category.html">بانوان <span>&rsaquo;</span></a>
-                                    <div class="dropdown-menu">
-                                        <ul>
-                                            <li><a href="category.html">زیردسته های جدید </a> </li>
-                                            <li><a href="category.html">زیردسته ها </a> </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li><a href="category.html">دخترانه</a> </li>
-                                <li><a href="category.html">پسرانه</a> </li>
-                                <li><a href="category.html">نوزاد</a> </li>
-                                <li><a href="category.html">لوازم <span>&rsaquo;</span></a>
-                                    <div class="dropdown-menu">
-                                        <ul>
-                                            <li><a href="category.html">زیردسته های جدید</a></li>
-                                            <li><a href="category.html">زیردسته های جدید</a></li>
-                                            <li><a href="category.html">زیردسته ها</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="dropdown"> <a href="category.html">ساعت</a>
-                        <div class="dropdown-menu">
-                            <ul>
-                                <li> <a href="category.html">ساعت مردانه</a></li>
-                                <li> <a href="category.html">ساعت زنانه</a></li>
-                                <li> <a href="category.html">ساعت بچگانه</a></li>
-                                <li> <a href="category.html">لوازم</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="dropdown"><a href="category.html">زیبایی و سلامت</a>
-                        <div class="dropdown-menu">
-                            <ul>
-                                <li> <a href="category.html">عطر و ادکلن</a></li>
-                                <li> <a href="category.html">آرایشی</a></li>
-                                <li> <a href="category.html">ضد آفتاب</a></li>
-                                <li> <a href="category.html">مراقبت از پوست</a></li>
-                                <li> <a href="category.html">مراقبت از چشم</a></li>
-                                <li> <a href="category.html">مراقبت از مو</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="menu_brands dropdown"><a href="#">برند ها</a>
-                        <div class="dropdown-menu">
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/image/product/apple_logo-60x60.jpg" title="اپل" alt="اپل" /></a><a href="#">اپل</a></div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/image/product/canon_logo-60x60.jpg" title="کنون" alt="کنون" /></a><a href="#">کنون</a></div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"> <a href="#"><img src="/image/product/hp_logo-60x60.jpg" title="اچ پی" alt="اچ پی" /></a><a href="#">اچ پی</a></div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/image/product/htc_logo-60x60.jpg" title="اچ تی سی" alt="اچ تی سی" /></a><a href="#">اچ تی سی</a></div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/image/product/palm_logo-60x60.jpg" title="پالم" alt="پالم" /></a><a href="#">پالم</a></div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/image/product/sony_logo-60x60.jpg" title="سونی" alt="سونی" /></a><a href="#">سونی</a> </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/image/product/canon_logo-60x60.jpg" title="test" alt="test" /></a><a href="#">تست</a> </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/image/product/apple_logo-60x60.jpg" title="test 3" alt="test 3" /></a><a href="#">تست 3</a></div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/image/product/canon_logo-60x60.jpg" title="test 5" alt="test 5" /></a><a href="#">تست 5</a> </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/image/product/canon_logo-60x60.jpg" title="test 6" alt="test 6" /></a><a href="#">تست 6</a></div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/image/product/apple_logo-60x60.jpg" title="test 7" alt="test 7" /></a><a href="#">تست 7</a> </div>
+                    @endforeach
 
-
-                        </div>
-                    </li>
                     <li class="dropdown wrap_custom_block hidden-sm hidden-xs"><a>بلاک سفارشی</a>
                         <div class="dropdown-menu custom_block">
                             <ul>
