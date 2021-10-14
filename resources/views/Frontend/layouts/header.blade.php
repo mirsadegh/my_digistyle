@@ -208,8 +208,9 @@
                 <ul class="nav navbar-nav">
                     <li><a class="home_link" title="خانه" href="{{ route('index') }}">خانه</a></li>
                     @php
-                      $categoriesParent = \App\Models\Category::where('parent',0)->get();
-                      $sub_categories = \App\Models\Category::where('parent', '!=',0)->get();
+                      $categoriesParent = \App\Models\Category::whereNull('parent_id')->get();
+                      $sub_categories = \App\Models\Category::whereNotNull('parent_id')->get();
+                    
                     @endphp
                     @foreach($categoriesParent  as $category)
                     <li class="dropdown">

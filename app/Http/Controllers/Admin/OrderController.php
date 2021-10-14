@@ -88,4 +88,6 @@ class OrderController extends Controller
         alert()->success('سفارش مورد نظر با موفقیت حذف گردید.');
         return back();
     }
+  
+    
 }

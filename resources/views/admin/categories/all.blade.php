@@ -52,17 +52,18 @@
                                 <tr class="odd text-center">
                                     <td tabindex="0">{{ $category->id }}</td>
                                     <td>{{ $category->name }}</td>
-                                    <td>{{ $category->parent($category->parent) }}</td>
+                                    <td>{{ $category->parent($category->parent_id) }}</td>
                                     <td class="d-flex">
                                         <a class="btn btn-sm btn-warning" href="{{ route('admin.categories.edit',$category->id) }}">ویرایش</a>
                                         <div class="display-inline-block mr-3">
-                                            <form method="post" action="{{ route('admin.categories.destroy',$category->id)  }}">
+                                            <form method="post" action="{{ route('admin.categories.destroy',$category->id)}}">
                                                 @csrf
-                                                @method('DELETE')
-                                                <button type="submit"  class="btn btn-sm btn-danger">حذف</button>
+                                                @method('DELETE') 
+                                                <button type="submit"  class="btn btn-sm btn-danger show_confirm"  data-toggle="tooltip" title='Delete'>حذف</button>
                                             </form>
+                                            
                                         </div>
-                                        <a href="{{ route('admin.categories.create') }}?parent={{ $category->id }}" class="btn btn-sm btn-primary mr-3">ثبت زیر دسته</a>
+                                        <a href="{{ route('admin.categories.create') }}?parent_id={{ $category->id }}" class="btn btn-sm btn-primary mr-3">ثبت زیر دسته</a>
                                     </td>
                                 </tr>
                                 @if(count($category->childs) > 0)
@@ -80,6 +81,29 @@
 
 
     </div>
+
+    @slot('script')
+       <script type="text/javascript">
+         $('.show_confirm').click(function(event) {
+            var form =  $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                title: `آیا واقعا میخواهید این دسته بندی را حذف کنید؟`,
+                text: "!اگر شما این دسته بندی را حذف کنید. کاملا از بین خواهد رفت",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,  
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                form.submit();
+              }
+            });
+        });
+       </script>
+        
+    @endslot
 
 @endcomponent
 

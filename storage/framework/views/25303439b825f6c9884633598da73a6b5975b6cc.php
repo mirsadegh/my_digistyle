@@ -52,17 +52,18 @@
                                 <tr class="odd text-center">
                                     <td tabindex="0"><?php echo e($category->id); ?></td>
                                     <td><?php echo e($category->name); ?></td>
-                                    <td><?php echo e($category->parent($category->parent)); ?></td>
+                                    <td><?php echo e($category->parent($category->parent_id)); ?></td>
                                     <td class="d-flex">
                                         <a class="btn btn-sm btn-warning" href="<?php echo e(route('admin.categories.edit',$category->id)); ?>">ویرایش</a>
                                         <div class="display-inline-block mr-3">
                                             <form method="post" action="<?php echo e(route('admin.categories.destroy',$category->id)); ?>">
                                                 <?php echo csrf_field(); ?>
-                                                <?php echo method_field('DELETE'); ?>
-                                                <button type="submit"  class="btn btn-sm btn-danger">حذف</button>
+                                                <?php echo method_field('DELETE'); ?> 
+                                                <button type="submit"  class="btn btn-sm btn-danger show_confirm"  data-toggle="tooltip" title='Delete'>حذف</button>
                                             </form>
+                                            
                                         </div>
-                                        <a href="<?php echo e(route('admin.categories.create')); ?>?parent=<?php echo e($category->id); ?>" class="btn btn-sm btn-primary mr-3">ثبت زیر دسته</a>
+                                        <a href="<?php echo e(route('admin.categories.create')); ?>?parent_id=<?php echo e($category->id); ?>" class="btn btn-sm btn-primary mr-3">ثبت زیر دسته</a>
                                     </td>
                                 </tr>
                                 <?php if(count($category->childs) > 0): ?>
@@ -80,6 +81,29 @@
 
 
     </div>
+
+    <?php $__env->slot('script'); ?>
+       <script type="text/javascript">
+         $('.show_confirm').click(function(event) {
+            var form =  $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                title: `آیا واقعا میخواهید این دسته بندی را حذف کنید؟`,
+                text: "!اگر شما این دسته بندی را حذف کنید. کاملا از بین خواهد رفت",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,  
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                form.submit();
+              }
+            });
+        });
+       </script>
+        
+    <?php $__env->endSlot(); ?>
 
 <?php if (isset($__componentOriginal3868cefb37e84dfa0f62e77959fc379246768695)): ?>
 <?php $component = $__componentOriginal3868cefb37e84dfa0f62e77959fc379246768695; ?>

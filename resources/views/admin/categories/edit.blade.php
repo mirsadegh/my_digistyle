@@ -33,28 +33,9 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                       @if(! count($category->childs))
-                                        <div class="form-group">
-                                            <label for="" class="col-sm-2 control-label">دسته والد</label>
-                                            <div class="col-sm-10">
-
-                                                <select class="form-control" name="parent">
-                                                    <option value="0">انتخاب کنید.</option>
-                                                    @foreach($categories as $cate)
-                                                        <option value="{{ $cate->id }}" {{ $cate->id == $category->parent ? 'selected':'' }}>{{ $cate->name }}</option>
-                                                        @if(count($cate->childs)>0)
-                                                             @include('admin.layouts.category',['categories' => $cate->childs,'level' => 1,'selected_cat' => $category])
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
-                                        </div>
-                                       @endif
                                  </div>
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-success" style="">ویرایش دسته</button>
+                                    <button type="submit" class="btn btn-success">ویرایش دسته</button>
                                     <a href="{{ route('admin.categories.index') }}" class="btn btn-default float-left">لغو</a>
                                 </div>
                              </form>

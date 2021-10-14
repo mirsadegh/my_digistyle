@@ -27,15 +27,15 @@
                                 </div>
                             </div>
 
-                           @if(request('parent'))
+                           @if(request('parent_id'))
                                @php
-                                  $parent = \App\Models\Category::find(request('parent'))
+                                  $parent = \App\Models\Category::find(request('parent_id'))
                                @endphp
                                 <div class="form-group">
                                     <label for="input-firstname" class="col-sm-2 control-label">دسته والد</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"  disabled  value="{{ $parent->name }}">
-                                        <input type="hidden" name="parent" value="{{ $parent->id }}">
+                                        <input type="hidden" name="parent_id" value="{{ $parent->id }}">
                                     </div>
                                 </div>
                             @endif

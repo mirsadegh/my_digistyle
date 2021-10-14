@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
@@ -16,7 +18,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('parent',0)->latest()->paginate(10);
+        $categories = Category::whereNull('parent_id')->latest()->paginate(10);
         return view('admin.categories.all',compact('categories'));
     }
 
@@ -38,19 +40,21 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->parent){
+        if ($request->parent_id){
             $request->validate([
-               'parent'  => 'exists:categories,id',
+               'parent_id'  => 'exists:categories,id',
             ]);
         }
+
         $request->validate([
-            'name' => 'required|min:3'
-        ]);
-        Category::create([
-            'name' => $request->name,
-            'parent' => $request->parent ?? 0,
+            'name' => 'required|min:3|unique:categories,name'
         ]);
 
+        Category::create([
+            'name' => $request->name,
+            'parent_id' => $request->parent_id ?? null,
+        ]);
+       
         alert()->success('دسته جدید با موفقیت ثبت گردید.');
         return redirect(route('admin.categories.index'));
     }
@@ -64,7 +68,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories = Category::where('parent',0)->where('id','!=',$category->id)->get();
+        $categories = Category::whereNull('parent_id')->where('id','!=',$category->id)->get();
         return view('admin.categories.edit',compact('category','categories'));
     }
 
@@ -77,28 +81,29 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        if ($request->parent){
+      
+        if ($request->parent_id){
             $request->validate([
-                'parent'  => 'exists:categories,id',
+                'parent_id'  => 'exists:categories,id',
             ]);
         }
         $request->validate([
-            'name' => 'required|min:3'
+            'name' => ['required','min:3', Rule::unique('categories','name')->ignore($category->id)],
         ]);
 
-        if (count($category->childs)   && $category->parent  != $request->parent){
+        if (count($category->childs)   && $category->parent_id  != $request->parent_id){
             Session::flash('edit-category','این دسته بندی دارای زیر دسته میباشد. نمیتوان دسته والد را عوض کرد.');
             $category->update([
                 'name' => $request->name,
             ]);
             return back();
-        }elseif ($category->id == $request->parent ){
+        }elseif ($category->id == $request->parent_id ){
             Session::flash('edit-category','دسته والد انتخاب شده با دسته یکی میباشد.');
             return back();
         }else{
             $category->update([
                 'name' => $request->name,
-                'parent' => $request->parent ?? 0,
+                'parent_id' => $request->parent_id ?? null,
             ]);
             alert()->success('باموفقیت دسته مورد نظر ویرایش گردید');
             return redirect(route('admin.categories.index'));
@@ -118,6 +123,7 @@ class CategoryController extends Controller
             return back();
         }
         $category->delete();
+      
         alert()->success('دسته مورد نظر باموفقیت حذف گردید');
         return back();
     }

@@ -208,8 +208,9 @@
                 <ul class="nav navbar-nav">
                     <li><a class="home_link" title="خانه" href="<?php echo e(route('index')); ?>">خانه</a></li>
                     <?php
-                      $categoriesParent = \App\Models\Category::where('parent',0)->get();
-                      $sub_categories = \App\Models\Category::where('parent', '!=',0)->get();
+                      $categoriesParent = \App\Models\Category::whereNull('parent_id')->get();
+                      $sub_categories = \App\Models\Category::whereNotNull('parent_id')->get();
+                    
                     ?>
                     <?php $__currentLoopData = $categoriesParent; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <li class="dropdown">

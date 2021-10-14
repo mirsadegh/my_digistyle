@@ -103,6 +103,7 @@
 
 <?php echo $__env->yieldContent('script'); ?>
 <script src="<?php echo e(asset('/js/admin.js')); ?>"></script>
+
 <?php echo $__env->make('sweet::alert', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </body>
 </html>
