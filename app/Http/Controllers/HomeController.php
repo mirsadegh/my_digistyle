@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Foreach_;
 
 class HomeController extends Controller
 {
@@ -25,6 +27,7 @@ class HomeController extends Controller
     {
         return view('Frontend.index');
     }
+  
 
     public function home()
     {

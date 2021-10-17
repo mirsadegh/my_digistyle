@@ -41,4 +41,10 @@ class Category extends Model
       
         return $parent->name;
     }
+
+    // public static function tree() {
+
+    //     return static::with(implode('.', array_fill(0, 4, 'children')))->where('parent_id', '=', NULL)->get();
+
+    // }
 }

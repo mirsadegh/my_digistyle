@@ -202,30 +202,41 @@
     <!-- Main آقایانu Start-->
 
     <nav id="menu" class="navbar">
-{{--        <div class="navbar-header"><span class="visible-xs visible-sm"> منو <b></b></span></div>--}}
+
         <div class="container">
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a class="home_link" title="خانه" href="{{ route('index') }}">خانه</a></li>
-                    @php
-                      $categoriesParent = \App\Models\Category::whereNull('parent_id')->get();
-                      $sub_categories = \App\Models\Category::whereNotNull('parent_id')->get();
-                    
-                    @endphp
-                    @foreach($categoriesParent  as $category)
-                    <li class="dropdown">
-                        <a href="#">{{ $category->name }}</a>
-                         @if(count($category->childs) > 0)
-                            <div class="dropdown-menu">
-                                <ul>
-                                   @include('Frontend.layouts.sub_category',['categories' => $category->childs])
-                                </ul>
+                   <li> <a class="home_link" title="خانه" href="{{ route('index') }}">خانه</a> </li>
+                    @foreach($frontCategories as $parentCategory)
+                        <li data-id="{{ $parentCategory->id }}">     
+                        <a href="#">{{ $parentCategory->name }}</a>
+                        @if($parentCategory->childs->count())
+                        <div class="dropdown-menu" data-id="{{ $parentCategory->id }}">
+                            <ul>
+                                    @foreach($parentCategory->childs as $category)     
+                                            <li class="" data-id="{{ $category->id }}">
+                                                <a href="#">{{ $category->name }}  @if ($category->childs->count())<span>&rsaquo;</span>@endif</a>
+                                            
+                                                @if($category->childs->count())
+                                                        <div class="dropdown-menu" data-id="{{ $category->id }}">
+                                                            <ul>
+                                                                @foreach($category->childs as $childCategory)
+                                                                <li>  
+                                                                    <a href="#"  data-id="{{ $childCategory->id }}">  {{ $childCategory->name }}</a>
+                                                                </li>
+                                                                @endforeach
+                                                            </ul>             
+                                                        </div>
+                                                @endif
+                                            </li>          
+                                    @endforeach
+                            </ul>
                             </div>
-                         @endif
-                    </li>
+                        @endif
+                        </li>
                     @endforeach
-
-                    <li class="dropdown wrap_custom_block hidden-sm hidden-xs"><a>بلاک سفارشی</a>
+                    <li class="dropdown wrap_custom_block hidden-sm hidden-xs">
+                        <a>بلاک سفارشی</a>
                         <div class="dropdown-menu custom_block">
                             <ul>
                                 <li>

@@ -127,4 +127,6 @@ class CategoryController extends Controller
         alert()->success('دسته مورد نظر باموفقیت حذف گردید');
         return back();
     }
+
+    
 }
