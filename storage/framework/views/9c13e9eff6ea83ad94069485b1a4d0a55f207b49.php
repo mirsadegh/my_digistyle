@@ -30,7 +30,7 @@
 <div class="wrapper-wide">
      
       <?php echo $__env->make('Frontend.layouts.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-    <div id="container">
+    <div id="container">  
         <div class="container">
             <?php echo $__env->yieldContent('content'); ?>
         </div>
@@ -54,6 +54,19 @@
 <!-- JS Part End-->
 <?php echo $__env->make('sweet::alert', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
  <?php echo $__env->yieldContent('script-vue'); ?>
+
+ </script>
+ 
+ 
+ 
+
+
+
+
+
+
+
+
 </body>
 </html>
 

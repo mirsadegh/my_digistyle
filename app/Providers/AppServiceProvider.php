@@ -27,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
         View::composer('Frontend.layouts.header', 'App\Http\View\Composers\FrontPageComposer');
+       
     }
 }

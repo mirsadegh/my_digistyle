@@ -30,7 +30,7 @@
 <div class="wrapper-wide">
      
       @include('Frontend.layouts.header')
-    <div id="container">
+    <div id="container">  
         <div class="container">
             @yield('content')
         </div>
@@ -54,6 +54,19 @@
 <!-- JS Part End-->
 @include('sweet::alert')
  @yield('script-vue')
+
+ </script>
+ 
+ 
+ 
+
+
+
+
+
+
+
+
 </body>
 </html>
 

@@ -2,9 +2,9 @@
 
 
 @section('content')
-
-        @foreach ($products as $product)
-             <div class="product-thumb1 card">
+        
+  @foreach ($products as $product)
+             <div class="product-thumb1 card" style="width: 220px;hieght:530px">
                         <div class="image card-img-top">
                             <a href="{{route('singleProduct',$product->id)}}">
                                 <img src="{{ $product->image }}" alt="{{ $product->name  }}" title="{{ $product->name }}" class="img-responsive" style="width: 200px;height:330px" />
@@ -63,4 +63,11 @@
                     </div>
 
         @endforeach
+
+       
+
+
+       
+     
+
 @endsection

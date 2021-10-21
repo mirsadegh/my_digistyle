@@ -145,7 +145,6 @@
                                                                 <i class="fa fa-times"></i>
                                                             </button>
                                                         </form>
-
                                                     </td>
                                                 </tr>
 
@@ -209,20 +208,20 @@
                    <li> <a class="home_link" title="خانه" href="{{ route('index') }}">خانه</a> </li>
                     @foreach($frontCategories as $parentCategory)
                         <li data-id="{{ $parentCategory->id }}">     
-                        <a href="#">{{ $parentCategory->name }}</a>
+                        <a href="{{ route('products.category', [$parentCategory])}}">{{ $parentCategory->name }}</a>
                         @if($parentCategory->childs->count())
                         <div class="dropdown-menu" data-id="{{ $parentCategory->id }}">
                             <ul>
                                     @foreach($parentCategory->childs as $category)     
                                             <li class="" data-id="{{ $category->id }}">
-                                                <a href="#">{{ $category->name }}  @if ($category->childs->count())<span>&rsaquo;</span>@endif</a>
+                                                <a href="{{ route('products.category', [$parentCategory ,$category] )}}">{{ $category->name }}  @if ($category->childs->count())<span>&rsaquo;</span>@endif</a>
                                             
                                                 @if($category->childs->count())
                                                         <div class="dropdown-menu" data-id="{{ $category->id }}">
                                                             <ul>
                                                                 @foreach($category->childs as $childCategory)
                                                                 <li>  
-                                                                    <a href="#"  data-id="{{ $childCategory->id }}">  {{ $childCategory->name }}</a>
+                                                                    <a href="{{ route('products.category', [$parentCategory ,$category , $childCategory->slug ] )}}"  data-id="{{ $childCategory->id }}">  {{ $childCategory->name }}</a>
                                                                 </li>
                                                                 @endforeach
                                                             </ul>             

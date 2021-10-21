@@ -1,7 +1,7 @@
 <?php $__env->startSection('content'); ?>
-
-        <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-             <div class="product-thumb1 card">
+        
+  <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+             <div class="product-thumb1 card" style="width: 220px;hieght:530px">
                         <div class="image card-img-top">
                             <a href="<?php echo e(route('singleProduct',$product->id)); ?>">
                                 <img src="<?php echo e($product->image); ?>" alt="<?php echo e($product->name); ?>" title="<?php echo e($product->name); ?>" class="img-responsive" style="width: 200px;height:330px" />
@@ -60,6 +60,13 @@
                     </div>
 
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+       
+
+
+       
+     
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('Frontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Home\Desktop\project\digistyle\resources\views/Frontend/home/products.blade.php ENDPATH**/ ?>

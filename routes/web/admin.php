@@ -3,6 +3,7 @@
 
 
 Route::get('/',function (){
+
       return view('admin.dashboard.index');
 });
 

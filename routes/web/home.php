@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 
 Route::get('/', [\App\Http\Controllers\HomeController::class,'index'])->name('index');
 Route::get('/home', [\App\Http\Controllers\HomeController::class,'home'])->name('home');
@@ -28,7 +29,7 @@ Route::get('/secret',function (){
 Route::get('products',[App\Http\Controllers\ProductController::class,'index']);
 
 Route::get('products/{product}',[App\Http\Controllers\ProductController::class,'single'])->name('singleProduct');
-
+Route::get('/categories/{category:slug}/{childs:slug?}/{childs2?}', [CategoryController::class,'showProductsCategory'])->name('products.category');
 
 Route::post('cart/add/{product}',[\App\Http\Controllers\CartController::class,'addToCart'])->name('cart.add');
 Route::get('cart',[\App\Http\Controllers\CartController::class,'cart']);
