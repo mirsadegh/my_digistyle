@@ -48,6 +48,7 @@
                                             <button type="submit" class="btn btn-sm btn-danger ml-1">حذف</button>
                                         </form>
                                         <a href="{{ route('admin.products.edit',['product' => $product->id]) }}" class="btn btn-sm btn-primary ml-1">ویرایش</a>
+                                        <a href="{{  route('admin.products.gallery.index',['product' => $product->id]) }}" class="btn btn-sm btn-warning ml-1">گالری تصاویر</a>
                                 </td>
                             </tr>
                         @endforeach
