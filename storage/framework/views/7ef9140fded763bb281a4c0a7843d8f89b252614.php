@@ -179,6 +179,24 @@
                         </ul>
                     </li>
 
+                    <li class="nav-item has-treeview <?php echo e(isActive(['admin.sliders.index','admin.sliders.create','admin.sliders.edit'],'menu-open')); ?>">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-sliders"></i>
+                            <p>
+                                مدیریت اسلایدر
+                                <i class="fa fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('admin.sliders.index')); ?>" class="nav-link <?php echo e(isActive('admin.sliders.index')); ?>">
+                                    <i class="fa fa-list nav-icon"></i>
+                                    <p>لیست تصاویر اسلاید</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
 
 
                 </ul>

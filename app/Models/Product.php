@@ -53,6 +53,11 @@ class Product extends Model
     {
         return $this->hasMany(ProductGallery::class);
     }
+
+    public function slider()
+    {
+        return $this->hasOne(Slider::class);
+    }
 }
 
 
