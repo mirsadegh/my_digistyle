@@ -144,6 +144,8 @@
                                     @enderror
                                 </div>
                             </div>
+                           
+                           
                             <select-city-component :login="0" :provinces="{{ $provinces }}"></select-city-component>  
                            @error('province_id')
                                 <div class="alert alert-danger col-sm-10 pull-left">

@@ -141,6 +141,14 @@ return array(
         "code" => "کد",
         "percent" => "درصد",
         "expired_at" => "مهلت استفاده",
-        "discount_percent" => "درصد تخفیف"
+        "discount_percent" => "درصد تخفیف",
+        "logo" => "لوگو",
+        "tags" => "تگ",
+        "persianـname" => "نام فارسی",
+        "originalـname" => "نام اصلی",
+
+
     ),
 );
+
+

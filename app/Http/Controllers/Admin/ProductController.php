@@ -24,7 +24,7 @@ class ProductController extends Controller
              $products->where('name','LIKE',"%{$keyword}%")->orWhere('description','LIKE',"%{$keyword}%")->orWhere('id',$keyword);
          }
 
-        $products = $products->latest()->paginate(4);
+        $products = $products->latest()->paginate(10);
         return view('admin.products.all',compact('products'));
     }
 
@@ -54,9 +54,11 @@ class ProductController extends Controller
             "inventory" => "required",
             "discount_percent" => "required|numeric|between:0,99",
             "image" => "required",
-            "categories" => "required",
+            "category_id" => "required",
             "attributes" => "array"
         ]);
+
+
 
         // $file =  $request->file('image');
         // $distinationPath = '/images/'. now()->year .'/'.  now()->month . '/' . now()->day.'/';
@@ -66,7 +68,7 @@ class ProductController extends Controller
 
         $product = Product::create($validDate);
 
-        $product->categories()->sync($validDate['categories']);
+        // $product->categories()->sync($validDate['categories']);
         if (isset($validDate['attributes']))
         $this->attachAttributesToProduct($validDate['attributes'], $product);
         alert()->success('محصول جدید ایجاد گردید.');
@@ -106,19 +108,17 @@ class ProductController extends Controller
             "inventory" => "required",
             "discount_percent" => "required|numeric|between:0,99",
             "image" => "required",
-            "categories" => "required",
+            "category_id" => "required",
             "attributes" => "array",
         ]);
 
          $product->update($validDate);
-         $product->categories()->sync($validDate['categories']);
+        //  $product->categories()->sync($validDate['categories']);
 
           $product->attributes()->detach();
         if (isset($validDate['attributes']))
         $this->attachAttributesToProduct($validDate['attributes'], $product);
-
         alert()->success('محصول  مورد نظر با موفقیت ویرایش گردید.', 'باتشکر');
-
         return redirect(route('admin.products.index'));
     }
 

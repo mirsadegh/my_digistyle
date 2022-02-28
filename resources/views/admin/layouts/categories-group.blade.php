@@ -12,6 +12,8 @@
                     <button type="submit"  class="btn btn-sm btn-danger show_confirm" data-toggle="tooltip" title='Delete'>حذف</button>
                 </form>
             </div>
+
+           
         
              @if($level < 2)
                 <a href="{{ route('admin.categories.create') }}?parent_id={{ $sub_category->id }}" class="btn btn-sm btn-primary mr-3">ثبت زیر دسته</a>
@@ -20,6 +22,7 @@
     </tr>
     @if(count($sub_category->childs) > 0)
         @include('admin.layouts.categories-group',['categories' => $sub_category->childs,'level' => $level+1 ])
+        
     @endif
 @endforeach
 

@@ -23,7 +23,9 @@
                                     <div class="form-group required">
                                         <label for="input-firstname" class="col-sm-2 control-label">نام</label>
                                         <div class="col-sm-10">
+
                                             <input type="text" class="form-control @error('name') is-invalid @enderror"  id="input-firstname"  placeholder="نام" name="name" value="{{ old('name',$category->name) }}" required>
+                                             <input type="hidden" name="parent_id" value="{{ $category->parent_id }}">
                                             @error('name')
                                             <div class="alert alert-danger" style="margin-top: 10px">
                                                     <span role="alert">

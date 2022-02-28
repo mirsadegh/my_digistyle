@@ -10,7 +10,7 @@ class Category extends Model
 {
     use HasFactory;
     use Sluggable;
-    protected $fillable = ['name','parent_id','slug'];
+    protected $fillable = ['name','parent_id','slug','level'];
 
     public function sluggable(): array
     {
@@ -33,7 +33,7 @@ class Category extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->hasMany(Product::class);
     }
 
     public function parent($parent_id = null)
@@ -43,7 +43,7 @@ class Category extends Model
             return  '-';
         }
         $parent = Category::findOrFail($parent_id);
-      
+
         return $parent->name;
     }
 

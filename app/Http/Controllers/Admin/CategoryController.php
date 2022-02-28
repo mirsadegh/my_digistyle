@@ -40,6 +40,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
         if ($request->parent_id){
             $request->validate([
                'parent_id'  => 'exists:categories,id',
@@ -47,14 +48,16 @@ class CategoryController extends Controller
         }
 
         $request->validate([
-            'name' => 'required|min:3|unique:categories,name'
+            'name' => 'required|min:3|unique:categories,name',
+            'level' => ['required',Rule::in([1,2,3])]
         ]);
 
         Category::create([
             'name' => $request->name,
             'parent_id' => $request->parent_id ?? null,
+            'level'     => $request->level
         ]);
-       
+
         alert()->success('دسته جدید با موفقیت ثبت گردید.');
         return redirect(route('admin.categories.index'));
     }
@@ -81,7 +84,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-      
+
         if ($request->parent_id){
             $request->validate([
                 'parent_id'  => 'exists:categories,id',
@@ -123,10 +126,10 @@ class CategoryController extends Controller
             return back();
         }
         $category->delete();
-      
+
         alert()->success('دسته مورد نظر باموفقیت حذف گردید');
         return back();
     }
 
-    
+
 }

@@ -5,16 +5,16 @@
             <div class="col-sm-10">
                 <select class="form-control"  id="input-country" name="province_id" v-model="province" @change="getAllCities()"> 
                          
-                    <option v-for="province in provinces" :value="province.id">{{ province.name }}</option>        
+                    <option v-for="province in provinces" :value="province.id" :key="province.id">{{ province.name }}</option>        
                 </select>
             </div>
             
         </div>
         <div class="form-group required">
-            <label for="input-zone" class="col-sm-2 control-label">شهر</label>
+           g <label for="input-zone" class="col-sm-2 control-label">شهر</label>
             <div class="col-sm-10">
                 <select class="form-control" id="input-zone" name="city_id">
-                    <option v-for="city in cities"  :value="city.id">{{ city.name }}</option>
+                    <option v-for="city in cities"  :value="city.id" :key="city.id">{{ city.name }}</option>
                 </select>
             </div>
         </div>

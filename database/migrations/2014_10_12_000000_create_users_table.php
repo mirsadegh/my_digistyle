@@ -24,16 +24,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->unsignedBigInteger('province_id');
             $table->foreign('province_id')->references('id')->on('provinces')->onDelete('CASCADE');
-
-            $table->unsignedBigInteger('city_id');
-            $table->foreign('city_id')->references('id')->on('cities')->onDelete('CASCADE');
+            $table->unsignedBigInteger('city_id'); $table->foreign('city_id')->references('id')
+            ->on('cities')->onDelete('CASCADE'); 
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->boolean('agree');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-    }
+             $table->string ('password'); $table->boolean('agree'); $table->rememberToken(); $table->timestamps(); 
+
+        }); }
 
     /**
      * Reverse the migrations.

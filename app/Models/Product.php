@@ -17,6 +17,7 @@ class Product extends Model
         'price' ,
         'inventory',
         'discount_percent',
+        'category_id' ,
         'image'
     ];
 
@@ -34,9 +35,9 @@ class Product extends Model
         return $this->morphMany(Comment::class,'commentable');
     }
 
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsTo(Category::class,'category_id');
     }
 
     public function attributes()

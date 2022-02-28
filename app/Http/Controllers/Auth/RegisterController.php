@@ -92,7 +92,8 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-
+         
+        
           $user = User::create($request->all());
           $this->guard()->login($user);
 

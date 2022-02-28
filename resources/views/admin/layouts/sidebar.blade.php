@@ -197,6 +197,24 @@
 
                         </ul>
                     </li>
+                    <li class="nav-item has-treeview {{ isActive(['admin.sliders.index','admin.sliders.create','admin.sliders.edit'],'menu-open') }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-behance-square"></i>
+                            <p>
+                                 برندها
+                                <i class="fa fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.brands.index') }}" class="nav-link {{ isActive('admin.sliders.index') }}">
+                                    <i class="fa fa-list nav-icon"></i>
+                                    <p>لیست برندها</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
 
 
                 </ul>

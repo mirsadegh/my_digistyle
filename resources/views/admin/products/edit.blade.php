@@ -44,9 +44,9 @@
 
                    <div class="form-group">
                        <label class="col-sm-2 control-label">دسته بندی ها</label>
-                       <select class="form-control" name="categories[]" id="categories" multiple>
-                        @foreach(\App\Models\Category::all() as $category)
-                               <option value="{{ $category->id }}" {{ in_array($category->id,$product->categories->pluck('id')->toArray()) ? 'selected':'' }}>{{ $category->name }}</option>
+                       <select class="form-control" name="category_id" id="categories">
+                        @foreach(\App\Models\Category::where('level',3)->get() as $category)
+                               <option value="{{ $category->id }}" {{ $product->category_id  == $category->id ? 'selected':'' }}>{{ $category->name }}</option>
                         @endforeach
                        </select>
 

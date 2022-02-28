@@ -13,6 +13,7 @@ Route::get('/orders/{order}/payment',[\App\Http\Controllers\Admin\OrderControlle
 Route::resource('/products',\App\Http\Controllers\Admin\ProductController::class);
 Route::resource('products.gallery', \App\Http\Controllers\Admin\ProductGalleryController::class);
 Route::resource('sliders', \App\Http\Controllers\Admin\SliderController::class);
+Route::resource('brands', \App\Http\Controllers\Admin\BrandController::class);
 
 
 Route::get('comments',[\App\Http\Controllers\Admin\CommentController::class,'index'])->name('comments');

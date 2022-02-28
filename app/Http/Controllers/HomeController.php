@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\Foreach_;
 
@@ -25,9 +26,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('Frontend.index');
+         $products = Product::orderBy('created_at','desc')->get();
+        return view('Frontend.index',compact('products'));
     }
-  
+
 
     public function home()
     {

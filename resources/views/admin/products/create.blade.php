@@ -54,12 +54,12 @@
                   </div>
 
                           <div class="form-group">
-                              <label class="col-sm-2 control-label">دسته بندی ها</label>
-                              <select name="categories[]" class="form-control" id="categories" multiple>
-                                  @foreach(\App\Models\Category::all() as $category)
+                               <label class="col-sm-2 control-label">دسته بندی ها</label>
+                               <select name="category_id" class="form-control" id="categories">
+                                  @foreach(\App\Models\Category::where('level',3)->get() as $category)
                                       <option value="{{ $category->id }}">{{ $category->name }}</option>
                                   @endforeach
-                              </select>
+                               </select>
                           </div>
 
                           <h6>ویژگی محصول</h6>

@@ -8,6 +8,7 @@
                     <!-- Slideshow End-->
                     <!-- Banner Start-->
                     <div class="marketshop-banner">
+
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="/image/banner/sample-banner-3-300X300.jpg" alt="بنر نمونه 2" title="بنر نمونه 2" /></a></div>
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="/image/banner/sample-banner-1-300X300.jpg" alt="بنر نمونه" title="بنر نمونه" /></a></div>
@@ -15,12 +16,14 @@
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="/image/banner/sample-banner-4-300X300.jpg" alt="بنر نمونه 4" title="بنر نمونه 4" /></a></div>
                         </div>
                     </div>
+                      
                     <div class="row allProduct">
                          <a href="/products" class="underline"> همه محصولات</a>
                     </div>
                     <!-- Banner End-->
                     <!-- محصولات Tab Start -->
-                        @include('Frontend.layouts.tabStart')
+                          
+                        @include('Frontend.layouts.tabStart',['products' , $products ])
                     <!-- محصولات Tab Start -->
                     <!-- Banner Start -->
                     <div class="marketshop-banner">
@@ -44,7 +47,11 @@
                         <div class="item text-center"> <a href="#"><img src="image/product/canon_logo-100x100.jpg" alt="سونی" class="img-responsive" /></a> </div>
                         <div class="item text-center"> <a href="#"><img src="image/product/apple_logo-100x100.jpg" alt="کنون" class="img-responsive" /></a> </div>
                         <div class="item text-center"> <a href="#"><img src="image/product/canon_logo-100x100.jpg" alt="اپل" class="img-responsive" /></a> </div>
-                        <div class="item text-center"> <a href="#"><img src="image/product/apple_logo-100x100.jpg" alt="اچ تی سی" class="img-responsive" /></a> </div>
+                        <div class="item text-center">
+                            <a href="#">
+                                <img src="image/productapple_logo-100x100.jpg" alt=اچ تی سی" class="img-responsive" />
+                            </a>
+                        </div>
                         <div class="item text-center"> <a href="#"><img src="image/product/canon_logo-100x100.jpg" alt="اچ پی" class="img-responsive" /></a> </div>
                         <div class="item text-center"> <a href="#"><img src="image/product/apple_logo-100x100.jpg" alt="brand" class="img-responsive" /></a> </div>
                         <div class="item text-center"> <a href="#"><img src="image/product/canon_logo-100x100.jpg" alt="brand1" class="img-responsive" /></a> </div>
@@ -84,3 +91,5 @@
         </div>
     </div>
 @endsection
+
+
