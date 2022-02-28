@@ -91,7 +91,7 @@ class BrandController extends Controller
     {
         $result = $brand->delete();
         if($result){
-              alert()->success('برند مورد نظر با موفقیت حذف گردید.');
+              alert()->success('برند مورد نظر` با موفقیت حذف گردید.');
               return redirect()->route('admin.brands.index');
         }
     }
