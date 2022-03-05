@@ -12,9 +12,10 @@
     <!-- Breadcrumb Start-->
     <ul class="breadcrumb">
         <li><a href="#"><span><i class="fa fa-home"></i></span></a></li>
-        <?php $__currentLoopData = $product->categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cate): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <li><span><?php echo e($cate->name); ?></span></li>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+        <li><span><?php echo e($product->category->name); ?></span></li>
+
     </ul>
     <!-- Breadcrumb End-->
     <div class="row">
@@ -114,10 +115,8 @@
                 <div class="tab-content">
                     <div itemprop="description" id="tab-description" class="tab-pane active">
                         <div>
-                           <?php if($product->categories): ?>
-                                <?php $__currentLoopData = $product->categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cate): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <a href="#"><?php echo e($cate->name); ?></a>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                           <?php if($product->category): ?>
+                                    <a href="#"><?php echo e($product->category->name); ?></a>
                            <?php endif; ?>
                             <p> <?php echo $product->description; ?> </p>
                         </div>

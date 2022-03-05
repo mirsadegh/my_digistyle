@@ -1,5 +1,5 @@
 <?php $__env->startSection('content'); ?>
-        
+
   <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
              <div class="product-thumb1 card" style="width: 220px;hieght:530px">
                         <div class="image card-img-top">
@@ -48,9 +48,21 @@
                                 <span>افزودن به سبد</span>
                             </button>
                             <div class="add-to-links">
-                                <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی ها" onClick="">
-                                    <i class="fa fa-heart"></i>
-                                </button>
+                                <?php if(Auth::check()): ?>
+
+                                    <?php if(! $product->favorited()): ?>
+
+                                        <a href="#" id="<?php echo e($product->id); ?>" data-toggle="tooltip" title="افزودن به علاقه مندی ها" onClick="event.preventDefault();changeFavorite(<?php echo e($product->id); ?>)">
+                                            <i class="fa fa-heart-o"></i>
+                                        </a>
+                                    <?php else: ?>
+
+                                        <a href="#" id="<?php echo e($product->id); ?>" data-toggle="tooltip" title="حذف از علاقه مندی ها" onClick="event.preventDefault();changeUnFavorite(<?php echo e($product->id); ?>)">
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+
                                 <button type="button" data-toggle="tooltip" title="مقایسه این محصول" onClick="">
                                     <i class="fa fa-exchange"></i>
                                 </button>
@@ -60,13 +72,49 @@
                     </div>
 
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php $__env->stopSection(); ?>
 
-       
+<?php $__env->startSection('script-vue'); ?>
 
 
-       
-     
+<script type="text/javascript">
+
+    function changeFavorite(id){
+          var url = /favorite/+id;
+          $.ajax({
+              url: url,
+              type: "GET",
+              success:function (response){
+                  console.log(response.status);
+                  if (response.status) {
+                     $("#"+id +'>i').removeClass('fa-heart-o').addClass('fa-heart');
+                      $("#"+id).attr('title' , response.message);
+                  }
+              },
+
+          })
+    }
+    function changeUnFavorite(id){
+
+        var url = '/unFavorite/'+ id;
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success:function (response){
+
+                console.log(response.status)
+                 if(response.status){
+                     $("#"+id +'>i').removeClass('fa-heart').addClass('fa-heart-o');
+                     $("#"+id).attr('title' , response.message);
+                 }
+            },
+
+        })
+    }
+</script>
 
 <?php $__env->stopSection(); ?>
+
 
 <?php echo $__env->make('Frontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/sadegh/Desktop/project/my_digistyle/resources/views/Frontend/home/products.blade.php ENDPATH**/ ?>

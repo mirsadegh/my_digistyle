@@ -18,4 +18,6 @@ class ProductController extends Controller
 
         return view('Frontend.home.single-product',compact('product'));
     }
+
+  
 }

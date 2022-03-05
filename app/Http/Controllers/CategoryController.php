@@ -24,17 +24,17 @@ class CategoryController extends Controller
               $selectedCategories = [$category->id , $childCategory->id];
         } elseif($category){
              $ids = collect($category->id);
-             $ids = $ids->merge($category->childs->pluck('id'));  
+             $ids = $ids->merge($category->childs->pluck('id'));
              foreach ($category->childs as  $subCategory) {
-                  $ids = $ids->merge($subCategory->childs->pluck('id'));  
-             }  
-             $selectedCategories[] = $category->id;        
-        } 
-        $products = Product::whereHas('categories',function ($query) use($ids) {
+                  $ids = $ids->merge($subCategory->childs->pluck('id'));
+             }
+             $selectedCategories[] = $category->id;
+        }
+        $products = Product::whereHas('category',function ($query) use($ids) {
               $query->whereIn('id',$ids);
         })->get();
         return view('Frontend.home.products',compact('products'));
     }
 
-   
+
 }

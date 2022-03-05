@@ -19,6 +19,7 @@ Route::get('/', [\App\Http\Controllers\HomeController::class,'index'])->name('in
 Route::get('/home', [\App\Http\Controllers\HomeController::class,'home'])->name('home');
 Route::get('/api/cities/{provinceId}',[\App\Http\Controllers\Auth\RegisterController::class,'getAllCites']);
 
+Route::post('search',[\App\Http\Controllers\HomeController::class,'search'])->name('search');
 
 Auth::routes(['verify'=>true]);
 Route::get('/secret',function (){
@@ -38,6 +39,11 @@ Route::patch('cart/quantity/change',[\App\Http\Controllers\CartController::class
 Route::post('discount/check',[\App\Http\Controllers\DiscountController::class,'check'])->name('cart.discount.check');
 Route::delete('discount/delete',[\App\Http\Controllers\DiscountController::class,'destroy']);
 
+Route::get('/showFavorites',[\App\Http\Controllers\FavoriteController::class,'showFavorites'])->name('showFavorites');
+Route::get('/favorite/{product}',[\App\Http\Controllers\FavoriteController::class,'favoriteProduct'])->name('favorite');
+Route::get('/unFavorite/{product}',[\App\Http\Controllers\FavoriteController::class,'unFavoriteProduct'])->name('unFavorite');
+
+
 Route::middleware('auth')->group(function (){
     Route::post('comments',[App\Http\Controllers\HomeController::class,'comments'])->name('send.comment');
     Route::post('payment',[\App\Http\Controllers\PaymentController::class,'payment'])->name('cart.payment');
@@ -52,7 +58,7 @@ Route::middleware('auth')->group(function (){
         Route::get('/orders',[App\Http\Controllers\Profile\OrderController::class,'index'])->name('profile.orders');
         Route::get('/orders/{order}',[App\Http\Controllers\Profile\OrderController::class,'showDetails'])->name('profile.orders.detail');
         Route::get('/orders/{order}/payment',[App\Http\Controllers\Profile\OrderController::class,'payment'])->name('profile.orders.payment');
-    
+
 
      });
 

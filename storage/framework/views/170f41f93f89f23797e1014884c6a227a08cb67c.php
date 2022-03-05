@@ -64,7 +64,7 @@
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item" href="<?php echo e(route('profile.index')); ?>">حساب کاربری</a>
                                     <a class="dropdown-item" href="<?php echo e(route('profile.orders')); ?>">سفارش های من</a>
-                                    <a class="dropdown-item" href="#">لیست علاقمندی ها</a>
+                                    <a class="dropdown-item" href="<?php echo e(route('showFavorites')); ?>">لیست علاقمندی ها</a>
                                     <a class="dropdown-item"  href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit()"> خروج از حساب کاربری</a>
                                     <form action="<?php echo e(route('logout')); ?>" method="post" id="logout-form">
                                         <?php echo csrf_field(); ?>
@@ -189,8 +189,12 @@
                 <!-- جستجو Start-->
                 <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12 inner">
                     <div id="search" class="input-group">
-                        <input id="filter_name" type="text" name="search" value="" placeholder="جستجو" class="form-control input-lg" />
-                        <button type="button" class="button-search"><i class="fa fa-search"></i></button>
+                        <form action="<?php echo e(route('search')); ?>" method="post">
+                            <?php echo csrf_field(); ?>
+                            <input id="filter_name" type="text" name="search" value="" placeholder="جستجو" class="form-control input-lg" />
+                            <button type="submit" class="button-search"><i class="fa fa-search"></i></button>
+                        </form>
+
                     </div>
                 </div>
                 <!-- جستجو End-->
@@ -207,27 +211,27 @@
                 <ul class="nav navbar-nav">
                    <li> <a class="home_link" title="خانه" href="<?php echo e(route('index')); ?>">خانه</a> </li>
                     <?php $__currentLoopData = $frontCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $parentCategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li data-id="<?php echo e($parentCategory->id); ?>">     
+                        <li data-id="<?php echo e($parentCategory->id); ?>">
                         <a href="<?php echo e(route('products.category', [$parentCategory])); ?>"><?php echo e($parentCategory->name); ?></a>
                         <?php if($parentCategory->childs->count()): ?>
                         <div class="dropdown-menu" data-id="<?php echo e($parentCategory->id); ?>">
                             <ul>
-                                    <?php $__currentLoopData = $parentCategory->childs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>     
+                                    <?php $__currentLoopData = $parentCategory->childs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <li class="" data-id="<?php echo e($category->id); ?>">
                                                 <a href="<?php echo e(route('products.category', [$parentCategory ,$category] )); ?>"><?php echo e($category->name); ?>  <?php if($category->childs->count()): ?><span>&rsaquo;</span><?php endif; ?></a>
-                                            
+
                                                 <?php if($category->childs->count()): ?>
                                                         <div class="dropdown-menu" data-id="<?php echo e($category->id); ?>">
                                                             <ul>
                                                                 <?php $__currentLoopData = $category->childs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $childCategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                <li>  
+                                                                <li>
                                                                     <a href="<?php echo e(route('products.category', [$parentCategory ,$category , $childCategory->slug ] )); ?>"  data-id="<?php echo e($childCategory->id); ?>">  <?php echo e($childCategory->name); ?></a>
                                                                 </li>
                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                            </ul>             
+                                                            </ul>
                                                         </div>
                                                 <?php endif; ?>
-                                            </li>          
+                                            </li>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                             </div>

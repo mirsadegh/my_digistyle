@@ -2,7 +2,7 @@
 
 
 @section('content')
-        
+
   @foreach ($products as $product)
              <div class="product-thumb1 card" style="width: 220px;hieght:530px">
                         <div class="image card-img-top">
@@ -51,9 +51,21 @@
                                 <span>افزودن به سبد</span>
                             </button>
                             <div class="add-to-links">
-                                <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی ها" onClick="">
-                                    <i class="fa fa-heart"></i>
-                                </button>
+                                @if(Auth::check())
+
+                                    @if(! $product->favorited())
+
+                                        <a href="#" id="{{ $product->id }}" data-toggle="tooltip" title="افزودن به علاقه مندی ها" onClick="event.preventDefault();changeFavorite({{ $product->id }})">
+                                            <i class="fa fa-heart-o"></i>
+                                        </a>
+                                    @else
+
+                                        <a href="#" id="{{ $product->id }}" data-toggle="tooltip" title="حذف از علاقه مندی ها" onClick="event.preventDefault();changeUnFavorite({{ $product->id }})">
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                    @endif
+                                @endif
+
                                 <button type="button" data-toggle="tooltip" title="مقایسه این محصول" onClick="">
                                     <i class="fa fa-exchange"></i>
                                 </button>
@@ -63,11 +75,47 @@
                     </div>
 
         @endforeach
+@endsection
 
-       
+@section('script-vue')
 
 
-       
-     
+<script type="text/javascript">
+
+    function changeFavorite(id){
+          var url = /favorite/+id;
+          $.ajax({
+              url: url,
+              type: "GET",
+              success:function (response){
+                  console.log(response.status);
+                  if (response.status) {
+                     $("#"+id +'>i').removeClass('fa-heart-o').addClass('fa-heart');
+                      $("#"+id).attr('title' , response.message);
+                  }
+              },
+
+          })
+    }
+    function changeUnFavorite(id){
+
+        var url = '/unFavorite/'+ id;
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success:function (response){
+
+                console.log(response.status)
+                 if(response.status){
+                     $("#"+id +'>i').removeClass('fa-heart').addClass('fa-heart-o');
+                     $("#"+id).attr('title' , response.message);
+                 }
+            },
+
+        })
+    }
+</script>
 
 @endsection
+

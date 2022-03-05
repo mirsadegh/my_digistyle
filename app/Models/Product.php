@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
@@ -37,7 +38,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(Category::class);
     }
 
     public function attributes()
@@ -58,6 +59,11 @@ class Product extends Model
     public function slider()
     {
         return $this->hasOne(Slider::class);
+    }
+
+    public function favorited()
+    {
+        return (bool) Favorite::where('user_id',Auth::id())->where('product_id',$this->id)->first();
     }
 }
 

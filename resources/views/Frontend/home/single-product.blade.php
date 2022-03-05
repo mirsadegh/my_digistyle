@@ -13,9 +13,10 @@
     <!-- Breadcrumb Start-->
     <ul class="breadcrumb">
         <li><a href="#"><span><i class="fa fa-home"></i></span></a></li>
-        @foreach($product->categories as $cate)
-        <li><span>{{ $cate->name }}</span></li>
-        @endforeach
+
+
+        <li><span>{{ $product->category->name }}</span></li>
+
     </ul>
     <!-- Breadcrumb End-->
     <div class="row">
@@ -115,10 +116,8 @@
                 <div class="tab-content">
                     <div itemprop="description" id="tab-description" class="tab-pane active">
                         <div>
-                           @if($product->categories)
-                                @foreach($product->categories as $cate)
-                                    <a href="#">{{ $cate->name }}</a>
-                                @endforeach
+                           @if($product->category)
+                                    <a href="#">{{ $product->category->name }}</a>
                            @endif
                             <p> {!! $product->description !!} </p>
                         </div>

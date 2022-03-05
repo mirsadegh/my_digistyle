@@ -16,13 +16,13 @@
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="/image/banner/sample-banner-4-300X300.jpg" alt="بنر نمونه 4" title="بنر نمونه 4" /></a></div>
                         </div>
                     </div>
-                      
+
                     <div class="row allProduct">
                          <a href="/products" class="underline"> همه محصولات</a>
                     </div>
                     <!-- Banner End-->
                     <!-- محصولات Tab Start -->
-                          
+
                         @include('Frontend.layouts.tabStart',['products' , $products ])
                     <!-- محصولات Tab Start -->
                     <!-- Banner Start -->
@@ -43,18 +43,18 @@
 
                     <!-- برند Logo Carousel Start-->
                     <div id="carousel" class="owl-carousel nxt">
-                        <div class="item text-center"> <a href="#"><img src="image/product/apple_logo-100x100.jpg" alt="پالم" class="img-responsive" /></a> </div>
-                        <div class="item text-center"> <a href="#"><img src="image/product/canon_logo-100x100.jpg" alt="سونی" class="img-responsive" /></a> </div>
-                        <div class="item text-center"> <a href="#"><img src="image/product/apple_logo-100x100.jpg" alt="کنون" class="img-responsive" /></a> </div>
-                        <div class="item text-center"> <a href="#"><img src="image/product/canon_logo-100x100.jpg" alt="اپل" class="img-responsive" /></a> </div>
-                        <div class="item text-center">
-                            <a href="#">
-                                <img src="image/productapple_logo-100x100.jpg" alt=اچ تی سی" class="img-responsive" />
-                            </a>
+
+                        @php
+                            $brands = App\Models\Brand::all();
+                        @endphp
+
+                      @foreach ($brands as $brand)
+                       <div class="item text-center">
+                            <a href="#"><img src="{{ $brand->logo }}" alt="{{ $brand->original_name }}" class="img-responsive" width="70"/></a>
                         </div>
-                        <div class="item text-center"> <a href="#"><img src="image/product/canon_logo-100x100.jpg" alt="اچ پی" class="img-responsive" /></a> </div>
-                        <div class="item text-center"> <a href="#"><img src="image/product/apple_logo-100x100.jpg" alt="brand" class="img-responsive" /></a> </div>
-                        <div class="item text-center"> <a href="#"><img src="image/product/canon_logo-100x100.jpg" alt="brand1" class="img-responsive" /></a> </div>
+                      @endforeach
+
+
                     </div>
                     <!-- برند Logo Carousel End -->
                 </div>

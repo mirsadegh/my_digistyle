@@ -28,9 +28,9 @@
 </head>
 <body>
 <div class="wrapper-wide">
-     
+
       <?php echo $__env->make('Frontend.layouts.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-    <div id="container">  
+    <div id="container">
         <div class="container">
             <?php echo $__env->yieldContent('content'); ?>
         </div>
@@ -43,7 +43,8 @@
 </div>
 <!-- JS Part Start-->
 <script src="<?php echo e(asset('js/app.js')); ?>"></script>
-<script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/jquery.easing-1.3.min.js"></script>
 <script type="text/javascript" src="/js/jquery.dcjqaccordion.min.js"></script>
@@ -56,9 +57,9 @@
  <?php echo $__env->yieldContent('script-vue'); ?>
 
  </script>
- 
- 
- 
+
+
+
 
 
 

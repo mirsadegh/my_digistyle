@@ -64,7 +64,7 @@
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item" href="{{ route('profile.index') }}">حساب کاربری</a>
                                     <a class="dropdown-item" href="{{ route('profile.orders')}}">سفارش های من</a>
-                                    <a class="dropdown-item" href="#">لیست علاقمندی ها</a>
+                                    <a class="dropdown-item" href="{{ route('showFavorites') }}">لیست علاقمندی ها</a>
                                     <a class="dropdown-item"  href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit()"> خروج از حساب کاربری</a>
                                     <form action="{{ route('logout') }}" method="post" id="logout-form">
                                         @csrf
@@ -189,8 +189,12 @@
                 <!-- جستجو Start-->
                 <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12 inner">
                     <div id="search" class="input-group">
-                        <input id="filter_name" type="text" name="search" value="" placeholder="جستجو" class="form-control input-lg" />
-                        <button type="button" class="button-search"><i class="fa fa-search"></i></button>
+                        <form action="{{ route('search') }}" method="post">
+                            @csrf
+                            <input id="filter_name" type="text" name="search" value="" placeholder="جستجو" class="form-control input-lg" />
+                            <button type="submit" class="button-search"><i class="fa fa-search"></i></button>
+                        </form>
+
                     </div>
                 </div>
                 <!-- جستجو End-->
@@ -207,27 +211,27 @@
                 <ul class="nav navbar-nav">
                    <li> <a class="home_link" title="خانه" href="{{ route('index') }}">خانه</a> </li>
                     @foreach($frontCategories as $parentCategory)
-                        <li data-id="{{ $parentCategory->id }}">     
+                        <li data-id="{{ $parentCategory->id }}">
                         <a href="{{ route('products.category', [$parentCategory])}}">{{ $parentCategory->name }}</a>
                         @if($parentCategory->childs->count())
                         <div class="dropdown-menu" data-id="{{ $parentCategory->id }}">
                             <ul>
-                                    @foreach($parentCategory->childs as $category)     
+                                    @foreach($parentCategory->childs as $category)
                                             <li class="" data-id="{{ $category->id }}">
                                                 <a href="{{ route('products.category', [$parentCategory ,$category] )}}">{{ $category->name }}  @if ($category->childs->count())<span>&rsaquo;</span>@endif</a>
-                                            
+
                                                 @if($category->childs->count())
                                                         <div class="dropdown-menu" data-id="{{ $category->id }}">
                                                             <ul>
                                                                 @foreach($category->childs as $childCategory)
-                                                                <li>  
+                                                                <li>
                                                                     <a href="{{ route('products.category', [$parentCategory ,$category , $childCategory->slug ] )}}"  data-id="{{ $childCategory->id }}">  {{ $childCategory->name }}</a>
                                                                 </li>
                                                                 @endforeach
-                                                            </ul>             
+                                                            </ul>
                                                         </div>
                                                 @endif
-                                            </li>          
+                                            </li>
                                     @endforeach
                             </ul>
                             </div>
