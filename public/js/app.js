@@ -28138,7 +28138,6 @@ var render = function () {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group required" }, [
-      _vm._v("\n       g "),
       _c(
         "label",
         { staticClass: "col-sm-2 control-label", attrs: { for: "input-zone" } },

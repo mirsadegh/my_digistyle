@@ -15,6 +15,7 @@ class FavoriteController extends Controller
            $user = \Auth::id();
            $user = User::find($user);
            $products = $user->favorites;
+         
            return view('Frontend.home.products',compact('products'));
     }
 

@@ -15,9 +15,10 @@ class ProductController extends Controller
 
     public function single(Product $product)
     {
-
+        $product->view_count += 1;
+        $product->save();
         return view('Frontend.home.single-product',compact('product'));
     }
 
-  
+
 }

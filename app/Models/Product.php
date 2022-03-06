@@ -19,7 +19,8 @@ class Product extends Model
         'inventory',
         'discount_percent',
         'category_id' ,
-        'image'
+        'image',
+        'brand_id'
     ];
 
     public function sluggable(): array
@@ -64,6 +65,11 @@ class Product extends Model
     public function favorited()
     {
         return (bool) Favorite::where('user_id',Auth::id())->where('product_id',$this->id)->first();
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
     }
 }
 

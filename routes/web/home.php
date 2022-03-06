@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,7 @@ Route::get('/secret',function (){
 
 
 Route::get('products',[App\Http\Controllers\ProductController::class,'index']);
+Route::get('gallery/{product}',[App\Http\Controllers\GalleryController::class,'index'])->name('product.gallery');
 
 Route::get('products/{product}',[App\Http\Controllers\ProductController::class,'single'])->name('singleProduct');
 Route::get('/categories/{category:slug}/{childs:slug?}/{childs2?}', [CategoryController::class,'showProductsCategory'])->name('products.category');
@@ -58,7 +60,6 @@ Route::middleware('auth')->group(function (){
         Route::get('/orders',[App\Http\Controllers\Profile\OrderController::class,'index'])->name('profile.orders');
         Route::get('/orders/{order}',[App\Http\Controllers\Profile\OrderController::class,'showDetails'])->name('profile.orders.detail');
         Route::get('/orders/{order}/payment',[App\Http\Controllers\Profile\OrderController::class,'payment'])->name('profile.orders.payment');
-
 
      });
 

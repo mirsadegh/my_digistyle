@@ -8,6 +8,44 @@
           modal.find('input[name="parent_id"]').val(parent_id)
         })
     </script>
+
+<script type="text/javascript">
+
+    function changeFavorite(id){
+          var url = /favorite/+id;
+          $.ajax({
+              url: url,
+              type: "GET",
+              success:function (response){
+                  console.log(response.status);
+                  if (response.status) {
+                     $("#"+id +'>i').removeClass('fa-heart-o').addClass('fa-heart');
+                      $("#"+id).attr('title' , response.message);
+                  }
+              },
+
+          })
+    }
+    function changeUnFavorite(id){
+
+        var url = '/unFavorite/'+ id;
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success:function (response){
+
+                console.log(response.status)
+                 if(response.status){
+                     $("#"+id +'>i').removeClass('fa-heart').addClass('fa-heart-o');
+                     $("#"+id).attr('title' , response.message);
+                 }
+            },
+
+        })
+    }
+</script>
+
 @endsection
 @section('content')
     <!-- Breadcrumb Start-->
@@ -36,25 +74,22 @@
                             <span> برای مشاهده گالری روی تصویر کلیک کنید</span>
                         </div>
                         <div class="image-additional" id="gallery_01">
-                            <a class="thumbnail" href="#" title="{{ $product->name }}">
-                                <img src="/image/product/macbook_air_1-66x99.jpg" title="{{ $product->name }}" alt="{{ $product->name }}">
-                            </a>
-                            <a class="thumbnail" href="#" title="{{ $product->name }}">
-                                <img src="/image/product/macbook_air_4-66x99.jpg" title="{{ $product->name }}"alt="{{ $product->name }}">
-                            </a>
-                            <a class="thumbnail" href="#" title="{{ $product->name }}">
-                                <img src="/image/product/macbook_air_2-66x99.jpg" title="{{ $product->name }}" alt="{{ $product->name }}">
-                            </a>
-                            <a class="thumbnail" href="#" title="{{ $product->name }}">
-                                <img src="/image/product/macbook_air_3-66x99.jpg" title="{{ $product->name }}" alt="{{ $product->name }}">
-                            </a>
+
+
+
+                            @foreach ($product->gallery->take(4) as $gallery)
+                                <a class="thumbnail" href="{{ route('product.gallery',$product->id) }}" title="{{ $product->name }}">
+                                    <img src="{{ $gallery->image }}" title="{{ $product->name }}" alt="{{ $product->name }}" width="100">
+                                </a>
+                            @endforeach
+
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <ul class="list-unstyled description">
-                            <li><b>برند :</b> <a href="#"><span itemprop="brand">اپل</span></a></li>
+                            <li><b>برند :</b> <a href="#"><span itemprop="brand">{{ $product->brand->persian_name }}</span></a></li>
                             <li><b>کد محصول :</b> <span>{{ $product->id }}</span></li>
-                            <li><b>امتیازات خرید:</b> 700</li>
+                       
                             <li><b>وضعیت موجودی :</b>
                                 @if($product->inventory >0)
                                   <span class="instock">موجود</span>
@@ -93,11 +128,19 @@
                                             <button type="submit" class="btn btn-primary btn-lg">افزودن به سبد</button>
                                         </form>
                                 </div>
-                                <div>
-                                    <button type="button" class="wishlist" onclick="">
-                                        <i class="fa fa-heart"></i>
-                                        <span>افزودن به علاقه مندی ها</span>
-                                    </button>
+                                <div class="d-flex mr-5 mt-3">
+                                    @if(Auth::check())
+
+                                    @if(! $product->favorited())
+                                        <a href="#" id="{{ $product->id }}" data-toggle="tooltip" title="افزودن به علاقه مندی ها" onClick="event.preventDefault();changeFavorite({{ $product->id }})" style="margin-top: 5px">
+                                            <i class="fa fa-heart-o"></i>
+                                        </a>
+                                    @else
+                                        <a href="#" id="{{ $product->id }}" data-toggle="tooltip" title="حذف از علاقه مندی ها" onClick="event.preventDefault();changeUnFavorite({{ $product->id }})" style="margin-top: 5px">
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                    @endif
+                                @endif
                                     <br>
                                     <button type="button" class="wishlist" onclick="">
                                         <i class="fa fa-exchange"></i>
@@ -126,11 +169,11 @@
                         <div id="tab-specification" class="tab-pane">
 
                             <ul style="list-style: none">
-                                @foreach($product->attributes as $attr)
-                                <li class="c-product__specs-table-item">
-                                    <div class="c-product__specs-table-item-title"> {{ $attr->name }}</div>
-                                    <div class="c-product__specs-table-item-values">{{ $attr->pivot->value->value }}</div>
-                                </li>
+                                  @foreach($product->attributes as $attr)
+                                    <li class="c-product__specs-table-item">
+                                        <div class="c-product__specs-table-item-title"> {{ $attr->name }} :</div>
+                                        <div class="c-product__specs-table-item-values">{{ $attr->pivot->value->value }}</div>
+                                    </li>
                                     @endforeach
                             </ul>
 
@@ -206,3 +249,5 @@
     <!--Middle Part End -->
 
 @endsection
+
+

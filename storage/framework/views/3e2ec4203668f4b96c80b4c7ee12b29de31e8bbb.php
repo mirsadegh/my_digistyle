@@ -7,6 +7,44 @@
           modal.find('input[name="parent_id"]').val(parent_id)
         })
     </script>
+
+<script type="text/javascript">
+
+    function changeFavorite(id){
+          var url = /favorite/+id;
+          $.ajax({
+              url: url,
+              type: "GET",
+              success:function (response){
+                  console.log(response.status);
+                  if (response.status) {
+                     $("#"+id +'>i').removeClass('fa-heart-o').addClass('fa-heart');
+                      $("#"+id).attr('title' , response.message);
+                  }
+              },
+
+          })
+    }
+    function changeUnFavorite(id){
+
+        var url = '/unFavorite/'+ id;
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success:function (response){
+
+                console.log(response.status)
+                 if(response.status){
+                     $("#"+id +'>i').removeClass('fa-heart').addClass('fa-heart-o');
+                     $("#"+id).attr('title' , response.message);
+                 }
+            },
+
+        })
+    }
+</script>
+
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <!-- Breadcrumb Start-->
@@ -35,25 +73,22 @@
                             <span> برای مشاهده گالری روی تصویر کلیک کنید</span>
                         </div>
                         <div class="image-additional" id="gallery_01">
-                            <a class="thumbnail" href="#" title="<?php echo e($product->name); ?>">
-                                <img src="/image/product/macbook_air_1-66x99.jpg" title="<?php echo e($product->name); ?>" alt="<?php echo e($product->name); ?>">
-                            </a>
-                            <a class="thumbnail" href="#" title="<?php echo e($product->name); ?>">
-                                <img src="/image/product/macbook_air_4-66x99.jpg" title="<?php echo e($product->name); ?>"alt="<?php echo e($product->name); ?>">
-                            </a>
-                            <a class="thumbnail" href="#" title="<?php echo e($product->name); ?>">
-                                <img src="/image/product/macbook_air_2-66x99.jpg" title="<?php echo e($product->name); ?>" alt="<?php echo e($product->name); ?>">
-                            </a>
-                            <a class="thumbnail" href="#" title="<?php echo e($product->name); ?>">
-                                <img src="/image/product/macbook_air_3-66x99.jpg" title="<?php echo e($product->name); ?>" alt="<?php echo e($product->name); ?>">
-                            </a>
+
+
+
+                            <?php $__currentLoopData = $product->gallery->take(4); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gallery): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <a class="thumbnail" href="<?php echo e(route('product.gallery',$product->id)); ?>" title="<?php echo e($product->name); ?>">
+                                    <img src="<?php echo e($gallery->image); ?>" title="<?php echo e($product->name); ?>" alt="<?php echo e($product->name); ?>" width="100">
+                                </a>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <ul class="list-unstyled description">
-                            <li><b>برند :</b> <a href="#"><span itemprop="brand">اپل</span></a></li>
+                            <li><b>برند :</b> <a href="#"><span itemprop="brand"><?php echo e($product->brand->persian_name); ?></span></a></li>
                             <li><b>کد محصول :</b> <span><?php echo e($product->id); ?></span></li>
-                            <li><b>امتیازات خرید:</b> 700</li>
+                       
                             <li><b>وضعیت موجودی :</b>
                                 <?php if($product->inventory >0): ?>
                                   <span class="instock">موجود</span>
@@ -92,11 +127,19 @@
                                             <button type="submit" class="btn btn-primary btn-lg">افزودن به سبد</button>
                                         </form>
                                 </div>
-                                <div>
-                                    <button type="button" class="wishlist" onclick="">
-                                        <i class="fa fa-heart"></i>
-                                        <span>افزودن به علاقه مندی ها</span>
-                                    </button>
+                                <div class="d-flex mr-5 mt-3">
+                                    <?php if(Auth::check()): ?>
+
+                                    <?php if(! $product->favorited()): ?>
+                                        <a href="#" id="<?php echo e($product->id); ?>" data-toggle="tooltip" title="افزودن به علاقه مندی ها" onClick="event.preventDefault();changeFavorite(<?php echo e($product->id); ?>)" style="margin-top: 5px">
+                                            <i class="fa fa-heart-o"></i>
+                                        </a>
+                                    <?php else: ?>
+                                        <a href="#" id="<?php echo e($product->id); ?>" data-toggle="tooltip" title="حذف از علاقه مندی ها" onClick="event.preventDefault();changeUnFavorite(<?php echo e($product->id); ?>)" style="margin-top: 5px">
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                <?php endif; ?>
                                     <br>
                                     <button type="button" class="wishlist" onclick="">
                                         <i class="fa fa-exchange"></i>
@@ -125,11 +168,11 @@
                         <div id="tab-specification" class="tab-pane">
 
                             <ul style="list-style: none">
-                                <?php $__currentLoopData = $product->attributes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <li class="c-product__specs-table-item">
-                                    <div class="c-product__specs-table-item-title"> <?php echo e($attr->name); ?></div>
-                                    <div class="c-product__specs-table-item-values"><?php echo e($attr->pivot->value->value); ?></div>
-                                </li>
+                                  <?php $__currentLoopData = $product->attributes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li class="c-product__specs-table-item">
+                                        <div class="c-product__specs-table-item-title"> <?php echo e($attr->name); ?> :</div>
+                                        <div class="c-product__specs-table-item-values"><?php echo e($attr->pivot->value->value); ?></div>
+                                    </li>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
 
@@ -205,5 +248,7 @@
     <!--Middle Part End -->
 
 <?php $__env->stopSection(); ?>
+
+
 
 <?php echo $__env->make('Frontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/sadegh/Desktop/project/my_digistyle/resources/views/Frontend/home/single-product.blade.php ENDPATH**/ ?>
