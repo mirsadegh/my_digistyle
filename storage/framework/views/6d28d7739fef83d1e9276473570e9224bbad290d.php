@@ -215,6 +215,24 @@
 
                         </ul>
                     </li>
+                    <li class="nav-item has-treeview <?php echo e(isActive(['admin.amazing_sales.index','admin.amazing_sales.create','admin.amazing_sales.edit'],'menu-open')); ?>">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-buysellads"></i>
+                            <p style="font-size: 12px">
+                                 محصولات شگفت انگیز
+                                <i class="fa fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('admin.amazing_sales.index')); ?>" class="nav-link <?php echo e(isActive('admin.amazing_sales.index')); ?>">
+                                    <i class="fa fa-list nav-icon"></i>
+                                    <p style="font-size: 10px">لیست محصولات شگفت انگیز</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
 
 
                 </ul>

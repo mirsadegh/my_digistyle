@@ -14,7 +14,7 @@ class CreateBrandIdColumnForProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-           $table->foreignId('brand_id')->constrained('brands');
+        //    $table->foreignId('brand_id')->constrained('brands');
         });
     }
 

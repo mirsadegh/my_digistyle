@@ -1,9 +1,5 @@
 <?php
-
-
-
 Route::get('/',function (){
-
       return view('admin.dashboard.index');
 });
 
@@ -14,7 +10,7 @@ Route::resource('/products',\App\Http\Controllers\Admin\ProductController::class
 Route::resource('products.gallery', \App\Http\Controllers\Admin\ProductGalleryController::class);
 Route::resource('sliders', \App\Http\Controllers\Admin\SliderController::class);
 Route::resource('brands', \App\Http\Controllers\Admin\BrandController::class);
-
+Route::resource('/amazing_sales',  App\Http\Controllers\Admin\AmazingSaleController::class);
 
 Route::get('comments',[\App\Http\Controllers\Admin\CommentController::class,'index'])->name('comments');
 Route::delete('comments/delete/{comment}',[\App\Http\Controllers\Admin\CommentController::class,'destroy'])->name('comments.destroy');

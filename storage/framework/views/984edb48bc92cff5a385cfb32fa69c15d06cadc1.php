@@ -65,4 +65,6 @@
         </div>
     </div>
 <?php echo $__env->renderComponent(); ?>
+
+
 <?php /**PATH /home/sadegh/Desktop/project/my_digistyle/resources/views/admin/brands/all.blade.php ENDPATH**/ ?>

@@ -146,7 +146,10 @@ return array(
         "tags" => "تگ",
         "persianـname" => "نام فارسی",
         "originalـname" => "نام اصلی",
-
+        "percentage"  => "درصد",
+        "product_id" => "محصول",
+        "start_date" => "تاریخ شروع",
+        "end_date" =>    "تاریخ اتمام"
 
     ),
 );
