@@ -5,22 +5,21 @@
         <li><a href="#tab-bestseller">پرفروش</a></li>
         <li><a href="#tab-special">پیشنهادی</a></li>
     </ul>
+           @php
+               $amazing_sales = App\Models\AmazingSale::all();
+           @endphp
     <div id="tab-featured" class="tab_content">
         <div class="owl-carousel product_carousel_tab">
 
-           @php
-               $amazing_sales = App\Models\AmazingSale::all();
-
-           @endphp
             @foreach ($amazing_sales as $amazing_sale)
             <div class="product-thumb clearfix">
                     <div class="image">
                         <a href="/products/{{ $amazing_sale->product_id }}">
-                            <img src="{{ $amazing_sale->product->image }}" alt="" title="{{ $amazing_sale->product->name }}" class="img-responsive" />
+                            <img src="{{ $amazing_sale->product->image }}"  title="{{ $amazing_sale->product->name }}" class="img-responsive" />
                         </a>
                     </div>
                     <div class="caption">
-                        <h4><a href="product.html">{{ $amazing_sale->product->name }}</a></h4>
+                        <h4><a href="#">{{ $amazing_sale->product->name }}</a></h4>
                         <p class="price">
                             <span class="price-new">
                                 {{ number_format($amazing_sale->product->price - ($amazing_sale->percentage/100 * $amazing_sale->product->price))  }} تومان
@@ -29,26 +28,54 @@
                             <span class="price-old">{{ number_format($amazing_sale->product->price)  }} تومان</span>
                             <span class="saving">-{{ $amazing_sale->percentage }}%</span>
                         </p>
+
+                        @php
+                           $sumRatingsProduct = App\Models\Rating::where('product_id',$amazing_sale->product->id)->sum('stars_rated');
+                           $countRating = App\Models\Rating::where('product_id',$amazing_sale->product->id)->count();
+                           $avgRatingProduct = $sumRatingsProduct/$countRating;
+                           $avgRatingProduct = ceil($avgRatingProduct);
+
+                        @endphp
                         <div class="rating">
-                            <span class="fa fa-stack">
-                                <i class="fa fa-star fa-stack-2x"></i>
-                                <i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
-                            <span class="fa fa-stack">
-                                <i class="fa fa-star fa-stack-2x"></i>
-                                <i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
-                            <span class="fa fa-stack">
-                                <i class="fa fa-star fa-stack-2x"></i>
-                                <i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
-                            <span class="fa fa-stack">
-                                <i class="fa fa-star fa-stack-2x"></i>
-                                <i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
-                            <span class="fa fa-stack">
-                                <i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
+
+                            @for ($i=1;$i<=$avgRatingProduct;$i++)
+                                <span class="fa fa-stack">
+                                    <i class="fa fa-star fa-stack-2x"></i>
+                                    <i class="fa fa-star-o fa-stack-2x"></i>
+                                </span>
+                            @endfor
+                            @for ($i>$avgRatingProduct;$i<=5;$i++)
+                                <span class="fa fa-stack">
+                                    <i class="fa fa-star-o fa-stack-2x"></i>
+                                </span>
+                            @endfor
+
+                           {{-- @if(is_int($avgRatingProduct))
+                                @for ($i=1;$i<=$avgRatingProduct;$i++)
+                                    <span class="fa fa-stack">
+                                        <i class="fa fa-star fa-stack-2x"></i>
+                                        <i class="fa fa-star-o fa-stack-2x"></i>
+                                    </span>
+                                @endfor
+                                @for ($i>$avgRatingProduct;$i<=5;$i++)
+                                    <span class="fa fa-stack">
+                                        <i class="fa fa-star-o fa-stack-2x"></i>
+                                    </span>
+                                @endfor
+                          @elseif(is_float($avgRatingProduct))
+                            @for ($i=1;$i<=floor($avgRatingProduct);$i++)
+                                <span class="fa fa-stack">
+                                    <i class="fa fa-star fa-stack-2x"></i>
+                                    <i class="fa fa-star-o fa-stack-2x"></i>
+                                </span>
+                            @endfor
+                            @for ($i>ceil($avgRatingProduct);$i<=5;$i++)
+                                <span class="fa fa-stack">
+                                    <i class="fa fa-star-o fa-stack-2x"></i>
+                                </span>
+                            @endfor
+                          @endif --}}
+
                         </div>
                     </div>
                     <div class="button-group">

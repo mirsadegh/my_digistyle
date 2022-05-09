@@ -60,7 +60,7 @@
                                         <form action="{{ route('admin.comments.destroy',['comment' => $comment->id]) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger ml-1">حذف</button>
+                                            <button type="submit" class="btn btn-sm btn-danger delete ml-1">حذف</button>
                                         </form>
                                 </td>
                             </tr>
@@ -106,5 +106,6 @@
 
 
         </script>
+        @include('alerts.sweetalert.delete-confirm',['className' => 'delete'])
     @endslot
 @endcomponent

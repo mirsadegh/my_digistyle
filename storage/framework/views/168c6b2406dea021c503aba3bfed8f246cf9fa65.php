@@ -30,6 +30,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- bootstrap rtl -->
+    <link rel="stylesheet" href="<?php echo e(asset('admin-assets/sweetalert/sweetalert2.css')); ?>">
 
     <link rel="stylesheet" href="<?php echo e(asset('/css/admin.css')); ?>">
      <?php echo $__env->yieldContent('head'); ?>
@@ -100,6 +101,8 @@
 <!-- FastClick -->
 <script src="/adminlte/plugins/fastclick/fastclick.js"></script>
 <script src="/adminlte/plugins/select2/select2.full.js"></script>
+<script src="<?php echo e(asset('admin-assets/sweetalert/sweetalert2.min.js')); ?>"></script>
+
 
 <?php echo $__env->yieldContent('script'); ?>
 <script src="<?php echo e(asset('/js/admin.js')); ?>"></script>

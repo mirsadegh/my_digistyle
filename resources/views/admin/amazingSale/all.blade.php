@@ -53,7 +53,7 @@
                                    <form action="{{ route('admin.amazing_sales.destroy' , $amazing_sale->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger ml-1">حذف</button>
+                                        <button type="submit" class="btn btn-sm btn-danger delete ml-1">حذف</button>
                                    </form>
                                     <a href="{{ route('admin.amazing_sales.edit' , $amazing_sale->id) }}" class="btn btn-sm btn-primary ml-1">ویرایش</a>
                                 </td>
@@ -70,5 +70,10 @@
             <!-- /.card -->
         </div>
     </div>
+    @slot('script')
+    @include('alerts.sweetalert.delete-confirm',['className' => 'delete'])
+    @endslot
 @endcomponent
+
+
 

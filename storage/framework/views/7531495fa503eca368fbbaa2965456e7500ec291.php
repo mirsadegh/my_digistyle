@@ -53,20 +53,18 @@
 
 
 <!-- JS Part End-->
+
+<?php echo $__env->yieldContent('script-vue'); ?>
 <?php echo $__env->make('sweet::alert', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
- <?php echo $__env->yieldContent('script-vue'); ?>
 
- </script>
-
-
-
-
+<section class="toast-wrapper flex-row-reverse">
+    <?php echo $__env->make('alerts.toast.success', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('alerts.toast.error', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+</section>
 
 
-
-
-
-
+<?php echo $__env->make('alerts.sweetalert.success', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('alerts.sweetalert.error', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 </body>
 </html>

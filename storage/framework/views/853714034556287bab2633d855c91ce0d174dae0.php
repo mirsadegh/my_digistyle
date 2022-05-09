@@ -52,7 +52,7 @@
                                         <form action="<?php echo e(route('admin.orders.destroy' , $order->id)); ?>" method="POST">
                                             <?php echo csrf_field(); ?>
                                             <?php echo method_field('DELETE'); ?>
-                                            <button type="submit" class="btn btn-sm btn-danger">حذف</button>
+                                            <button type="submit" class="btn btn-sm delete btn-danger">حذف</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -71,6 +71,9 @@
             <!-- /.card -->
         </div>
     </div>
+    <?php $__env->slot('script'); ?>
+    <?php echo $__env->make('alerts.sweetalert.delete-confirm',['className' => 'delete'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php $__env->endSlot(); ?>
 
 <?php echo $__env->renderComponent(); ?>
 <?php /**PATH /home/sadegh/Desktop/project/my_digistyle/resources/views/admin/orders/all.blade.php ENDPATH**/ ?>

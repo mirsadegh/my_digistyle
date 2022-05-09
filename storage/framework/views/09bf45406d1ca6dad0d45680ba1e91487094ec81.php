@@ -53,7 +53,7 @@
                                    <form action="<?php echo e(route('admin.discounts.destroy' , $discount->id)); ?>" method="POST">
                                         <?php echo csrf_field(); ?>
                                         <?php echo method_field('DELETE'); ?>
-                                        <button type="submit" class="btn btn-sm btn-danger ml-1">حذف</button>
+                                        <button type="submit" class="btn btn-sm btn-danger delete ml-1">حذف</button>
                                    </form>
                                     <a href="<?php echo e(route('admin.discounts.edit' , $discount->id)); ?>" class="btn btn-sm btn-primary ml-1">ویرایش</a>
                                 </td>
@@ -71,5 +71,8 @@
             <!-- /.card -->
         </div>
     </div>
+    <?php $__env->slot('script'); ?>
+    <?php echo $__env->make('alerts.sweetalert.delete-confirm',['className' => 'delete'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php $__env->endSlot(); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php /**PATH /home/sadegh/Desktop/project/my_digistyle/resources/views/admin/discount/all.blade.php ENDPATH**/ ?>

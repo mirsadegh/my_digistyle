@@ -52,7 +52,7 @@
                                         <form action="{{ route('admin.orders.destroy' , $order->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">حذف</button>
+                                            <button type="submit" class="btn btn-sm delete btn-danger">حذف</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -70,5 +70,8 @@
             <!-- /.card -->
         </div>
     </div>
+    @slot('script')
+    @include('alerts.sweetalert.delete-confirm',['className' => 'delete'])
+    @endslot
 
 @endcomponent

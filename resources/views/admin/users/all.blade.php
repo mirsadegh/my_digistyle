@@ -57,7 +57,7 @@
                                         <form action="{{ route('admin.users.destroy',['user' => $user->id]) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger ml-1">حذف</button>
+                                            <button type="submit" class="btn btn-sm btn-danger delete ml-1">حذف</button>
                                         </form>
 
                                         <a href="{{ route('admin.users.edit',['user' => $user->id]) }}" class="btn btn-sm btn-primary ml-1">ویرایش</a>
@@ -76,4 +76,7 @@
             <!-- /.card -->
         </div>
     </div>
+    @slot('script')
+    @include('alerts.sweetalert.delete-confirm',['className' => 'delete'])
+    @endslot
 @endcomponent

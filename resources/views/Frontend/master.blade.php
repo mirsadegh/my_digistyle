@@ -53,20 +53,18 @@
 
 
 <!-- JS Part End-->
+
+@yield('script-vue')
 @include('sweet::alert')
- @yield('script-vue')
 
- </script>
-
-
-
-
+<section class="toast-wrapper flex-row-reverse">
+    @include('alerts.toast.success')
+    @include('alerts.toast.error')
+</section>
 
 
-
-
-
-
+@include('alerts.sweetalert.success')
+@include('alerts.sweetalert.error')
 
 </body>
 </html>

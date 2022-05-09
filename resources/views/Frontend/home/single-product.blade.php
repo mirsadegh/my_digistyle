@@ -48,6 +48,47 @@
 
 @endsection
 @section('content')
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalRate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <form action="{{ route('add.rate') }}" method="post">
+            @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> امتیاز به  محصول {{ $product->name }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="rating-css">
+                    <div class="star-icon">
+                        <input type="radio" value="1" name="product_rating" checked id="rating1">
+                        <label for="rating1" class="fa fa-star"></label>
+                        <input type="radio" value="2" name="product_rating" id="rating2">
+                        <label for="rating2" class="fa fa-star"></label>
+                        <input type="radio" value="3" name="product_rating" id="rating3">
+                        <label for="rating3" class="fa fa-star"></label>
+                        <input type="radio" value="4" name="product_rating" id="rating4">
+                        <label for="rating4" class="fa fa-star"></label>
+                        <input type="radio" value="5" name="product_rating" id="rating5">
+                        <label for="rating5" class="fa fa-star"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+            <button type="submit" class="btn btn-primary">ذخیره</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
     <!-- Breadcrumb Start-->
     <ul class="breadcrumb">
         <li><a href="#"><span><i class="fa fa-home"></i></span></a></li>
@@ -59,7 +100,7 @@
     <!-- Breadcrumb End-->
     <div class="row">
         <!--Middle Part Start-->
-        <div id="content" class="col-sm-9">
+        <div id="content" class="">
             <div>
                 <h1 class="title">{{ $product->name }}</h1>
                 <div class="row product-info">
@@ -89,7 +130,7 @@
                         <ul class="list-unstyled description">
                             <li><b>برند :</b> <a href="#"><span itemprop="brand">{{ $product->brand->persian_name }}</span></a></li>
                             <li><b>کد محصول :</b> <span>{{ $product->id }}</span></li>
-                       
+
                             <li><b>وضعیت موجودی :</b>
                                 @if($product->inventory >0)
                                   <span class="instock">موجود</span>
@@ -128,9 +169,33 @@
                                             <button type="submit" class="btn btn-primary btn-lg">افزودن به سبد</button>
                                         </form>
                                 </div>
-                                <div class="d-flex mr-5 mt-3">
+                                <div class="d-flex mr-5">
                                     @if(Auth::check())
-
+                                       @if (isset($rated))
+                                             <p class="ml-3">امتیاز شما به این محصول:</p>
+                                              <div class="ml-3">
+                                               @for ($i=1;$i<=$rated;$i++)
+                                                    <div class="rating ml-1">
+                                                        <span class="fa fa-stack">
+                                                            <i class="fa fa-star fa-stack-2x"></i>
+                                                            <i class="fa fa-star-o fa-stack-2x"></i>
+                                                        </span>
+                                                    </div>
+                                               @endfor
+                                               @for ($i=$rated;$i<5;$i++)
+                                                    <div class="rating ml-1">
+                                                        <span class="fa fa-stack">
+                                                            <i class="fa fa-star-o fa-stack-2x"></i>
+                                                        </span>
+                                                    </div>
+                                               @endfor
+                                              </div>
+                                       @else
+                                       <button type="button" class="btn btn-warning ml-3" data-toggle="modal" data-target="#ModalRate">
+                                           <i class="fa fa-star"></i>
+                                           امتیاز به این محصول
+                                       </button>
+                                    @endif
                                     @if(! $product->favorited())
                                         <a href="#" id="{{ $product->id }}" data-toggle="tooltip" title="افزودن به علاقه مندی ها" onClick="event.preventDefault();changeFavorite({{ $product->id }})" style="margin-top: 5px">
                                             <i class="fa fa-heart-o"></i>
@@ -229,6 +294,7 @@
                                         <div class="help-block">
                                             <span class="text-danger">توجه :</span> HTML بازگردانی نخواهد شد!
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="buttons">

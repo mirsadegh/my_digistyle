@@ -43,6 +43,7 @@ class AmazingSaleController extends Controller
      */
     public function store(AmazingSaleRequest $request)
     {
+        
         if($request->start_date >= $request->end_date){
             return back()->withErrors('تاریخ شروع بزرگتر از تاریخ اتمام است');
         }

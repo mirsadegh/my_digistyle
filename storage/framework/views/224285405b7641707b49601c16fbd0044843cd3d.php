@@ -5,22 +5,21 @@
         <li><a href="#tab-bestseller">پرفروش</a></li>
         <li><a href="#tab-special">پیشنهادی</a></li>
     </ul>
+           <?php
+               $amazing_sales = App\Models\AmazingSale::all();
+           ?>
     <div id="tab-featured" class="tab_content">
         <div class="owl-carousel product_carousel_tab">
 
-           <?php
-               $amazing_sales = App\Models\AmazingSale::all();
-
-           ?>
             <?php $__currentLoopData = $amazing_sales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $amazing_sale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="product-thumb clearfix">
                     <div class="image">
                         <a href="/products/<?php echo e($amazing_sale->product_id); ?>">
-                            <img src="<?php echo e($amazing_sale->product->image); ?>" alt="" title="<?php echo e($amazing_sale->product->name); ?>" class="img-responsive" />
+                            <img src="<?php echo e($amazing_sale->product->image); ?>"  title="<?php echo e($amazing_sale->product->name); ?>" class="img-responsive" />
                         </a>
                     </div>
                     <div class="caption">
-                        <h4><a href="product.html"><?php echo e($amazing_sale->product->name); ?></a></h4>
+                        <h4><a href="#"><?php echo e($amazing_sale->product->name); ?></a></h4>
                         <p class="price">
                             <span class="price-new">
                                 <?php echo e(number_format($amazing_sale->product->price - ($amazing_sale->percentage/100 * $amazing_sale->product->price))); ?> تومان
@@ -29,26 +28,30 @@
                             <span class="price-old"><?php echo e(number_format($amazing_sale->product->price)); ?> تومان</span>
                             <span class="saving">-<?php echo e($amazing_sale->percentage); ?>%</span>
                         </p>
+
+                        <?php
+                           $sumRatingsProduct = App\Models\Rating::where('product_id',$amazing_sale->product->id)->sum('stars_rated');
+                           $countRating = App\Models\Rating::where('product_id',$amazing_sale->product->id)->count();
+                           $avgRatingProduct = $sumRatingsProduct/$countRating;
+                           $avgRatingProduct = ceil($avgRatingProduct);
+
+                        ?>
                         <div class="rating">
-                            <span class="fa fa-stack">
-                                <i class="fa fa-star fa-stack-2x"></i>
-                                <i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
-                            <span class="fa fa-stack">
-                                <i class="fa fa-star fa-stack-2x"></i>
-                                <i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
-                            <span class="fa fa-stack">
-                                <i class="fa fa-star fa-stack-2x"></i>
-                                <i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
-                            <span class="fa fa-stack">
-                                <i class="fa fa-star fa-stack-2x"></i>
-                                <i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
-                            <span class="fa fa-stack">
-                                <i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
+
+                            <?php for($i=1;$i<=$avgRatingProduct;$i++): ?>
+                                <span class="fa fa-stack">
+                                    <i class="fa fa-star fa-stack-2x"></i>
+                                    <i class="fa fa-star-o fa-stack-2x"></i>
+                                </span>
+                            <?php endfor; ?>
+                            <?php for($i>$avgRatingProduct;$i<=5;$i++): ?>
+                                <span class="fa fa-stack">
+                                    <i class="fa fa-star-o fa-stack-2x"></i>
+                                </span>
+                            <?php endfor; ?>
+
+                           
+
                         </div>
                     </div>
                     <div class="button-group">

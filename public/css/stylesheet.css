@@ -3132,35 +3132,35 @@ div.required .control-label:before {
 	background-color: #6c757d;
 	border-color: #6c757d;
   }
-  
+
   .btn-secondary:hover {
 	color: #fff;
 	background-color: #5a6268;
 	border-color: #545b62;
   }
-  
+
   .btn-secondary:focus, .btn-secondary.focus {
 	box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
   }
-  
+
   .btn-secondary.disabled, .btn-secondary:disabled {
 	color: #fff;
 	background-color: #6c757d;
 	border-color: #6c757d;
   }
-  
+
   .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active,
   .show > .btn-secondary.dropdown-toggle {
 	color: #fff;
 	background-color: #545b62;
 	border-color: #4e555b;
   }
-  
+
   .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus,
   .show > .btn-secondary.dropdown-toggle:focus {
 	box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
   }
-  
+
 
 
   .btn-primary {
@@ -3168,30 +3168,30 @@ div.required .control-label:before {
 	background-color: #007bff;
 	border-color: #007bff;
   }
-  
+
   .btn-primary:hover {
 	color: #fff;
 	background-color: #0069d9;
 	border-color: #0062cc;
   }
-  
+
   .btn-primary:focus, .btn-primary.focus {
 	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
   }
-  
+
   .btn-primary.disabled, .btn-primary:disabled {
 	color: #fff;
 	background-color: #007bff;
 	border-color: #007bff;
   }
-  
+
   .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
   .show > .btn-primary.dropdown-toggle {
 	color: #fff;
 	background-color: #0062cc;
 	border-color: #005cbf;
   }
-  
+
   .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
   .show > .btn-primary.dropdown-toggle:focus {
 	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
@@ -3350,6 +3350,35 @@ div.required .control-label:before {
 }
 
 .input-pass{
-	border: 1px solid #ced4da;   
+	border: 1px solid #ced4da;
 	border-radius: 0px 4px 4px 0px;
 }
+
+
+/* rating */
+.rating-css div {
+    color: #ffe400;
+    font-size: 30px;
+    font-family: sans-serif;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 20px 0;
+  }
+  .rating-css input {
+    display: none;
+  }
+  .rating-css input + label {
+    font-size: 60px;
+    text-shadow: 1px 1px 0 #8f8420;
+    cursor: pointer;
+  }
+  .rating-css input:checked + label ~ label {
+    color: #b4afaf;
+  }
+  .rating-css label:active {
+    transform: scale(0.8);
+    transition: 0.3s ease;
+  }
+
+/* End of Star Rating */

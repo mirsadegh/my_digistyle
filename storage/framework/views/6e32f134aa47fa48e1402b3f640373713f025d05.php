@@ -60,7 +60,7 @@
                                         <form action="<?php echo e(route('admin.comments.destroy',['comment' => $comment->id])); ?>" method="post">
                                             <?php echo csrf_field(); ?>
                                             <?php echo method_field('DELETE'); ?>
-                                            <button type="submit" class="btn btn-sm btn-danger ml-1">حذف</button>
+                                            <button type="submit" class="btn btn-sm btn-danger delete ml-1">حذف</button>
                                         </form>
                                 </td>
                             </tr>
@@ -107,6 +107,7 @@
 
 
         </script>
+        <?php echo $__env->make('alerts.sweetalert.delete-confirm',['className' => 'delete'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php $__env->endSlot(); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php /**PATH /home/sadegh/Desktop/project/my_digistyle/resources/views/admin/comments/all.blade.php ENDPATH**/ ?>

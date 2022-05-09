@@ -45,7 +45,7 @@
                                         <form action="{{ route('admin.products.destroy',['product' => $product->id]) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger ml-1">حذف</button>
+                                            <button type="submit" class="btn btn-sm btn-danger delete ml-1">حذف</button>
                                         </form>
                                         <a href="{{ route('admin.products.edit',['product' => $product->id]) }}" class="btn btn-sm btn-primary ml-1">ویرایش</a>
                                         <a href="{{  route('admin.products.gallery.index',['product' => $product->id]) }}" class="btn btn-sm btn-warning ml-1">گالری تصاویر</a>
@@ -63,4 +63,7 @@
             <!-- /.card -->
         </div>
     </div>
+    @slot('script')
+    @include('alerts.sweetalert.delete-confirm',['className' => 'delete'])
+    @endslot
 @endcomponent

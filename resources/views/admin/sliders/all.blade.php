@@ -43,5 +43,5 @@
             <!-- /.card -->
         </div>
     </div>
-
+    
 @endcomponent

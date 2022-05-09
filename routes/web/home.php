@@ -48,6 +48,7 @@ Route::get('/unFavorite/{product}',[\App\Http\Controllers\FavoriteController::cl
 
 Route::middleware('auth')->group(function (){
     Route::post('comments',[App\Http\Controllers\HomeController::class,'comments'])->name('send.comment');
+    Route::post('add-rating',[App\Http\Controllers\RatingController::class,'add'])->name('add.rate');
     Route::post('payment',[\App\Http\Controllers\PaymentController::class,'payment'])->name('cart.payment');
     Route::get('payment/callback',[\App\Http\Controllers\PaymentController::class,'callback'])->name('payment.callback');
     Route::prefix('profile')->group(function(){

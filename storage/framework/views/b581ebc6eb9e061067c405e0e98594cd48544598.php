@@ -93,4 +93,6 @@
 
 
 
+
+
 <?php echo $__env->make('Frontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/sadegh/Desktop/project/my_digistyle/resources/views/Frontend/index.blade.php ENDPATH**/ ?>
