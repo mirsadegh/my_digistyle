@@ -238,7 +238,7 @@
                         <?php endif; ?>
                         </li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <li class="dropdown wrap_custom_block hidden-sm hidden-xs">
+                    <li class="dropdown wrap_custom_block hidden-sm hidden-xs" style="cursor: pointer;">
                         <a>بلاک سفارشی</a>
                         <div class="dropdown-menu custom_block">
                             <ul>
@@ -271,26 +271,19 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="dropdown information-link"><a>برگه ها</a>
+                    <li class="dropdown information-link" style="cursor: pointer"><a>برگه ها</a>
                         <div class="dropdown-menu">
                             <ul>
-                                <li><a href="login.html">ورود</a></li>
-                                <li><a href="register.html">ثبت نام</a></li>
-                                <li><a href="category.html">دسته بندی (شبکه/لیست)</a></li>
-                                <li><a href="product.html">محصولات</a></li>
-                                <li><a href="cart.html">سبد خرید</a></li>
-                                <li><a href="checkout.html">تسویه حساب</a></li>
+                                <li><a href="<?php echo e(route('login')); ?>">ورود</a></li>
+                                <li><a href="<?php echo e(route('register')); ?>">ثبت نام</a></li>
                                 <li><a href="compare.html">مقایسه</a></li>
-                                <li><a href="wishlist.html">لیست آرزو</a></li>
+                                <li><a href="<?php echo e(route('showFavorites')); ?>">لیست آرزو</a></li>
                                 <li><a href="search.html">جستجو</a></li>
                             </ul>
                             <ul>
-                                <li><a href="about-us.html">درباره ما</a></li>
-                                <li><a href="404.html">404</a></li>
-                                <li><a href="elements.html">عناصر</a></li>
-                                <li><a href="faq.html">سوالات متداول</a></li>
-                                <li><a href="sitemap.html">نقشه سایت</a></li>
-                                <li><a href="contact-us.html">تماس با ما</a></li>
+                                <li><a href="<?php echo e(route('about')); ?>">درباره ما</a></li>
+                                <li><a href="<?php echo e(route('notFound')); ?>">404</a></li>
+                                <li><a href="<?php echo e(route('contact')); ?>">تماس با ما</a></li>
                             </ul>
                         </div>
                     </li>

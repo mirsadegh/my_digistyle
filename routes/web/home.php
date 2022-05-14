@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [\App\Http\Controllers\HomeController::class,'index'])->name('index');
+Route::get('/404', [\App\Http\Controllers\HomeController::class,'notFound'])->name('notFound');
+Route::get('/about',[\App\Http\Controllers\HomeController::class,'about'])->name('about');
+Route::get('/contact',[\App\Http\Controllers\HomeController::class,'contact'])->name('contact');
 Route::get('/home', [\App\Http\Controllers\HomeController::class,'home'])->name('home');
 Route::get('/api/cities/{provinceId}',[\App\Http\Controllers\Auth\RegisterController::class,'getAllCites']);
 
@@ -44,6 +47,7 @@ Route::delete('discount/delete',[\App\Http\Controllers\DiscountController::class
 Route::get('/showFavorites',[\App\Http\Controllers\FavoriteController::class,'showFavorites'])->name('showFavorites');
 Route::get('/favorite/{product}',[\App\Http\Controllers\FavoriteController::class,'favoriteProduct'])->name('favorite');
 Route::get('/unFavorite/{product}',[\App\Http\Controllers\FavoriteController::class,'unFavoriteProduct'])->name('unFavorite');
+Route::get('/unFavoriteWishlist/{product}',[\App\Http\Controllers\FavoriteController::class,'unFavoriteWishlist'])->name('unFavoriteWishlist');
 
 
 Route::middleware('auth')->group(function (){

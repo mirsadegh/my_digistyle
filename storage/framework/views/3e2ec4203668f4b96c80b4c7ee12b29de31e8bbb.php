@@ -150,17 +150,7 @@
 
                         </ul>
                         <div id="product">
-                            <h3 class="subtitle">انتخاب های در دسترس</h3>
-                            <div class="form-group required">
-                                <label class="control-label">رنگ</label>
-                                <select class="form-control" id="input-option200" name="option[200]">
-                                    <option value=""> --- لطفا انتخاب کنید ---</option>
-                                    <option value="4">مشکی</option>
-                                    <option value="3">نقره ای</option>
-                                    <option value="1">سبز</option>
-                                    <option value="2">آبی</option>
-                                </select>
-                            </div>
+                            
                             <div class="cart">
                                 <div>
                                         <form action="<?php echo e(route('cart.add',$product->id)); ?>" method="post">
@@ -206,7 +196,7 @@
                                     <?php endif; ?>
                                 <?php endif; ?>
                                     <br>
-                                    <button type="button" class="wishlist" onclick="">
+                                    <button type="button" class="wishlist">
                                         <i class="fa fa-exchange"></i>
                                         <span>مقایسه این محصول</span>
                                     </button>

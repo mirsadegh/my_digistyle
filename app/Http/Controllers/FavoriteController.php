@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Favorite;
 use App\Models\User;
 use App\Models\Product;
+use Auth;
 use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
@@ -15,8 +16,8 @@ class FavoriteController extends Controller
            $user = \Auth::id();
            $user = User::find($user);
            $products = $user->favorites;
-         
-           return view('Frontend.home.products',compact('products'));
+
+           return view('Frontend.profile.wishlist',compact('products'));
     }
 
     public function favoriteProduct(Product $product)
@@ -29,5 +30,12 @@ class FavoriteController extends Controller
     {
         \Auth::user()->favorites()->detach($product->id);
         return response()->json(['status' =>200,'message'=>'از صفحه علاقه مندی حذف گردید.']);
+    }
+
+    public function unFavoriteWishlist(Product $product)
+    {
+        \Auth::user()->favorites()->detach($product->id);
+         alert()->success('محصول با موفقیت از لیست ارزوها حذف گردید.');
+         return back();
     }
 }

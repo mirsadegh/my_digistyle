@@ -3,10 +3,10 @@
         <li><a href="#tab-featured">ویژه</a></li>
         <li><a href="#tab-latest">جدیدترین</a></li>
         <li><a href="#tab-bestseller">پرفروش</a></li>
-        <li><a href="#tab-special">پیشنهادی</a></li>
+        {{-- <li><a href="#tab-special">پیشنهادی</a></li> --}}
     </ul>
            @php
-               $amazing_sales = App\Models\AmazingSale::all();
+               $amazing_sales = App\Models\AmazingSale::where('end_date','>=',Carbon\Carbon::now())->get();
            @endphp
     <div id="tab-featured" class="tab_content">
         <div class="owl-carousel product_carousel_tab">
@@ -15,7 +15,7 @@
             <div class="product-thumb clearfix">
                     <div class="image">
                         <a href="/products/{{ $amazing_sale->product_id }}">
-                            <img src="{{ $amazing_sale->product->image }}"  title="{{ $amazing_sale->product->name }}" class="img-responsive" />
+                            <img src="{{ $amazing_sale->product->image }}"  title="{{ $amazing_sale->product->name }}" class="img-responsive" width="180" />
                         </a>
                     </div>
                     <div class="caption">
@@ -30,27 +30,22 @@
                         </p>
 
                         @php
-                           $sumRatingsProduct = App\Models\Rating::where('product_id',$amazing_sale->product->id)->sum('stars_rated');
-                           $countRating = App\Models\Rating::where('product_id',$amazing_sale->product->id)->count();
-                           $avgRatingProduct = $sumRatingsProduct/$countRating;
-                           $avgRatingProduct = ceil($avgRatingProduct);
+                            $product = App\Models\Product::find($amazing_sale->product->id);
+                            $ratings = $product->ratings;
+                          if ($ratings->count() > 0) {
+                               $ratingCount = $ratings->count();
+                            $stars_rated = 0 ;
+                            foreach ($ratings as $rating){
+                                $stars = $rating->stars_rated;
+                                $stars_rated += $stars;
+                            }
+                            $avgRatingProduct = ceil($stars_rated/$ratingCount);
+                          }
 
                         @endphp
-                        <div class="rating">
+                        @if ($ratings->count() > 0)
+                            <div class="rating">
 
-                            @for ($i=1;$i<=$avgRatingProduct;$i++)
-                                <span class="fa fa-stack">
-                                    <i class="fa fa-star fa-stack-2x"></i>
-                                    <i class="fa fa-star-o fa-stack-2x"></i>
-                                </span>
-                            @endfor
-                            @for ($i>$avgRatingProduct;$i<=5;$i++)
-                                <span class="fa fa-stack">
-                                    <i class="fa fa-star-o fa-stack-2x"></i>
-                                </span>
-                            @endfor
-
-                           {{-- @if(is_int($avgRatingProduct))
                                 @for ($i=1;$i<=$avgRatingProduct;$i++)
                                     <span class="fa fa-stack">
                                         <i class="fa fa-star fa-stack-2x"></i>
@@ -62,26 +57,15 @@
                                         <i class="fa fa-star-o fa-stack-2x"></i>
                                     </span>
                                 @endfor
-                          @elseif(is_float($avgRatingProduct))
-                            @for ($i=1;$i<=floor($avgRatingProduct);$i++)
-                                <span class="fa fa-stack">
-                                    <i class="fa fa-star fa-stack-2x"></i>
-                                    <i class="fa fa-star-o fa-stack-2x"></i>
-                                </span>
-                            @endfor
-                            @for ($i>ceil($avgRatingProduct);$i<=5;$i++)
-                                <span class="fa fa-stack">
-                                    <i class="fa fa-star-o fa-stack-2x"></i>
-                                </span>
-                            @endfor
-                          @endif --}}
+                            </div>
+                        @endif
 
-                        </div>
                     </div>
                     <div class="button-group">
-                        <button class="btn-primary" type="button" onClick="cart.add('49');">
-                            <span>افزودن به سبد</span>
-                        </button>
+                        <form action="{{ route('cart.add',$amazing_sale->product->id) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-primary btn-lg">افزودن به سبد</button>
+                        </form>
                         <div class="add-to-links">
                         @if(Auth::check())
                             @if(! $amazing_sale->product->favorited())
@@ -102,9 +86,6 @@
                 </div>
 
             @endforeach
-
-
-
         </div>
     </div>
 
@@ -132,6 +113,35 @@
                          @endif
                     </div>
 
+                    @php
+                        $ratings = $product->ratings;
+                        if ($ratings->count() > 0) {
+
+                        $ratingCount = $ratings->count();
+                        $stars_rated = 0 ;
+                        foreach ($ratings as $rating){
+                            $stars = $rating->stars_rated;
+                            $stars_rated += $stars;
+                         }
+                            $avgRatingProduct = ceil($stars_rated/$ratingCount);
+                        }
+                    @endphp
+                   @if ($ratings->count() > 0)
+                    <div class="rating">
+
+                        @for ($i=1;$i<=$avgRatingProduct;$i++)
+                            <span class="fa fa-stack">
+                                <i class="fa fa-star fa-stack-2x"></i>
+                                <i class="fa fa-star-o fa-stack-2x"></i>
+                            </span>
+                        @endfor
+                        @for ($i>$avgRatingProduct;$i<=5;$i++)
+                            <span class="fa fa-stack">
+                                <i class="fa fa-star-o fa-stack-2x"></i>
+                            </span>
+                        @endfor
+                    </div>
+                   @endif
                     <div class="button-group" id="app">
                         <form action="{{ route('cart.add',$product->id) }}" method="post">
                             @csrf
@@ -160,65 +170,69 @@
         </div>
     </div>
 
-
+      @php
+           $bestsellerProducts = App\Models\Product::whereHas('orders', function($query){
+                   $query->where('status','paid');
+           })->get();
+      @endphp
 
     <div id="tab-bestseller" class="tab_content">
         <div class="owl-carousel product_carousel_tab">
-            <div class="product-thumb">
-                <div class="image"><a href="product.html"><img src="image/product/FinePix-Long-Zoom-Camera-220x330.jpg" alt="دوربین فاین پیکس" title="دوربین فاین پیکس" class="img-responsive" /></a></div>
-                <div class="caption">
-                    <h4><a href="product.html">دوربین فاین پیکس</a></h4>
-                    <p class="price"> 122000 تومان </p>
+
+         @foreach ($bestsellerProducts as $sellerProduct)
+           <div class="product-thumb">
+                <div class="image">
+                    <a href="/products/{{ $sellerProduct->id }}">
+                        <img src="{{ $sellerProduct->image }}" alt="{{ $sellerProduct->title }}" title="{{ $sellerProduct->title }}" class="img-responsive" width="180" />
+                    </a>
                 </div>
-                <div class="button-group">
-                    <button class="btn-primary" type="button" onClick=""><span>افزودن به سبد</span></button>
-                    <div class="add-to-links">
-                        <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick=""><i class="fa fa-heart"></i></button>
-                        <button type="button" data-toggle="tooltip" title="افزودن به مقایسه" onClick=""><i class="fa fa-exchange"></i></button>
+                <div class="caption">
+                    <h4><a href="/products/{{ $sellerProduct->id }}">{{ $sellerProduct->title }}</a></h4>
+                    <p class="price"> {{ $sellerProduct->price }} تومان </p>
+                </div>
+                @php
+                    $ratings = $sellerProduct->ratings;
+                    if ($ratings->count() > 0) {
+
+                    $ratingCount = $ratings->count();
+                    $stars_rated = 0 ;
+                    foreach ($ratings as $rating){
+                        $stars = $rating->stars_rated;
+                        $stars_rated += $stars;
+                    }
+                        $avgRatingProduct = ceil($stars_rated/$ratingCount);
+                    }
+                @endphp
+
+                  @if ($ratings->count() > 0)
+                    <div class="rating">
+                        @for ($i=1;$i<=$avgRatingProduct;$i++)
+                            <span class="fa fa-stack">
+                                <i class="fa fa-star fa-stack-2x"></i>
+                                <i class="fa fa-star-o fa-stack-2x"></i>
+                            </span>
+                        @endfor
+                        @for ($i>$avgRatingProduct;$i<=5;$i++)
+                            <span class="fa fa-stack">
+                                <i class="fa fa-star-o fa-stack-2x"></i>
+                            </span>
+                        @endfor
                     </div>
-                </div>
-            </div>
-            <div class="product-thumb">
-                <div class="image"><a href="product.html"><img src="image/product/nikon_d300_1-220x330.jpg" alt="دوربین دیجیتال حرفه ای" title="دوربین دیجیتال حرفه ای" class="img-responsive" /></a></div>
-                <div class="caption">
-                    <h4><a href="product.html">دوربین دیجیتال حرفه ای</a></h4>
-                    <p class="price"> <span class="price-new">92000 تومان</span> <span class="price-old">98000 تومان</span> <span class="saving">-6%</span> </p>
-                </div>
-                <div class="button-group">
-                    <button class="btn-primary" type="button" onClick=""><span>افزودن به سبد</span></button>
-                    <div class="add-to-links">
-                        <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick=""><i class="fa fa-heart"></i></button>
-                        <button type="button" data-toggle="tooltip" title="افزودن به مقایسه" onClick=""><i class="fa fa-exchange"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                @endif
 
-
-    <div id="tab-special" class="tab_content">
-        <div class="owl-carousel product_carousel_tab">
-
-
-           @foreach($products as $product)
-            <div class="product-thumb">
-                <div class="image"><a href="product.html"><img src="image/product/ipod_touch_1-220x330.jpg" alt="سامسونگ گلکسی s7" title="سامسونگ گلکسی s7" class="img-responsive" /></a></div>
-                <div class="caption">
-                    <h4><a href="product.html">سامسونگ گلکسی s7</a></h4>
-                    <p class="price"> <span class="price-new">62000 تومان</span> <span class="price-old">122000 تومان</span> <span class="saving">-50%</span> </p>
-                </div>
                 <div class="button-group">
                     <button class="btn-primary" type="button"><span>افزودن به سبد</span></button>
                     <div class="add-to-links">
-                        <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></button>
+                        <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick=""><i class="fa fa-heart"></i></button>
                         <button type="button" data-toggle="tooltip" title="افزودن به مقایسه" onClick=""><i class="fa fa-exchange"></i></button>
                     </div>
                 </div>
             </div>
-           @endforeach
+         @endforeach
+
+
         </div>
     </div>
-
 </div>
 
 

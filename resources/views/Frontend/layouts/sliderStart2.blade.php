@@ -21,13 +21,37 @@
                 @else
                     <p class="price"> {{ number_format($product->price) }} تومان </p>
                 @endif
+                @php
+
+                $ratings = $product->ratings;
+                if ($ratings->count() > 0) {
+                $ratingCount = $ratings->count();
+                $stars_rated = 0 ;
+                foreach ($ratings as $rating){
+                    $stars = $rating->stars_rated;
+                    $stars_rated += $stars;
+                }
+                $avgRatingProduct = ceil($stars_rated/$ratingCount);
+                }
+
+            @endphp
+            @if ($ratings->count() > 0)
                 <div class="rating">
-                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+
+                    @for ($i=1;$i<=$avgRatingProduct;$i++)
+                        <span class="fa fa-stack">
+                            <i class="fa fa-star fa-stack-2x"></i>
+                            <i class="fa fa-star-o fa-stack-2x"></i>
+                        </span>
+                    @endfor
+                    @for ($i>$avgRatingProduct;$i<=5;$i++)
+                        <span class="fa fa-stack">
+                            <i class="fa fa-star-o fa-stack-2x"></i>
+                        </span>
+                    @endfor
                 </div>
+            @endif
+
             </div>
             <div class="button-group">
                 <form action="{{ route('cart.add', $product->id) }}" method="post">

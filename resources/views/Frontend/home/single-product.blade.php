@@ -151,7 +151,7 @@
 
                         </ul>
                         <div id="product">
-                            <h3 class="subtitle">انتخاب های در دسترس</h3>
+                            {{-- <h3 class="subtitle">انتخاب های در دسترس</h3>
                             <div class="form-group required">
                                 <label class="control-label">رنگ</label>
                                 <select class="form-control" id="input-option200" name="option[200]">
@@ -161,7 +161,7 @@
                                     <option value="1">سبز</option>
                                     <option value="2">آبی</option>
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="cart">
                                 <div>
                                         <form action="{{ route('cart.add',$product->id) }}" method="post">
@@ -207,7 +207,7 @@
                                     @endif
                                 @endif
                                     <br>
-                                    <button type="button" class="wishlist" onclick="">
+                                    <button type="button" class="wishlist">
                                         <i class="fa fa-exchange"></i>
                                         <span>مقایسه این محصول</span>
                                     </button>

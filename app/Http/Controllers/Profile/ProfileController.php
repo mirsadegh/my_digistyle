@@ -67,6 +67,7 @@ class ProfileController extends Controller
           ]);
           $userId = auth()->id();
           $user = User::find($userId);
+         
           $user->update($validataed);
           alert()->success('رمز عبور باموفقیت برروزرسانی گردید');
           return redirect('/profile');

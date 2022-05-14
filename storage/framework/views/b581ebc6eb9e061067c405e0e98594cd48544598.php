@@ -33,7 +33,7 @@
                     </div>
                     <!-- Banner End -->
                     <!-- دسته ها محصولات Slider Start-->
-                              <?php echo $__env->make('Frontend.layouts.sliderStart', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                              
                     <!-- دسته ها محصولات Slider End-->
 
                     <!-- دسته ها محصولات Slider Start -->

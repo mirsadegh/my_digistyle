@@ -34,7 +34,7 @@
                     </div>
                     <!-- Banner End -->
                     <!-- دسته ها محصولات Slider Start-->
-                              @include('Frontend.layouts.sliderStart')
+                              {{-- @include('Frontend.layouts.sliderStart') --}}
                     <!-- دسته ها محصولات Slider End-->
 
                     <!-- دسته ها محصولات Slider Start -->

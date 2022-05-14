@@ -36,6 +36,22 @@ class HomeController extends Controller
         return view('home');
     }
 
+
+    public function notFound()
+    {
+        return view('errors.404');
+    }
+
+    public function about()
+    {
+        return view('Frontend.home.about-us');
+    }
+
+    public function contact()
+    {
+        return view('Frontend.home.contact-us');
+    }
+
     public function comments(Request $request)
     {
        $validData = $request->validate([

@@ -21,13 +21,37 @@
                 <?php else: ?>
                     <p class="price"> <?php echo e(number_format($product->price)); ?> تومان </p>
                 <?php endif; ?>
+                <?php
+
+                $ratings = $product->ratings;
+                if ($ratings->count() > 0) {
+                $ratingCount = $ratings->count();
+                $stars_rated = 0 ;
+                foreach ($ratings as $rating){
+                    $stars = $rating->stars_rated;
+                    $stars_rated += $stars;
+                }
+                $avgRatingProduct = ceil($stars_rated/$ratingCount);
+                }
+
+            ?>
+            <?php if($ratings->count() > 0): ?>
                 <div class="rating">
-                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+
+                    <?php for($i=1;$i<=$avgRatingProduct;$i++): ?>
+                        <span class="fa fa-stack">
+                            <i class="fa fa-star fa-stack-2x"></i>
+                            <i class="fa fa-star-o fa-stack-2x"></i>
+                        </span>
+                    <?php endfor; ?>
+                    <?php for($i>$avgRatingProduct;$i<=5;$i++): ?>
+                        <span class="fa fa-stack">
+                            <i class="fa fa-star-o fa-stack-2x"></i>
+                        </span>
+                    <?php endfor; ?>
                 </div>
+            <?php endif; ?>
+
             </div>
             <div class="button-group">
                 <form action="<?php echo e(route('cart.add', $product->id)); ?>" method="post">
