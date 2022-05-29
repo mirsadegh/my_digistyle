@@ -59,8 +59,17 @@
                     <button type="submit" class="btn btn-primary btn-lg">افزودن به سبد</button>
                 </form>
                 <div class="add-to-links">
-                    <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی" onClick=""><i
-                            class="fa fa-heart"></i></button>
+                    @if(Auth::check())
+                            @if(! $product->favorited())
+                                <a href="#" id="{{ $product->id }}" data-toggle="tooltip" title="افزودن به علاقه مندی ها" onClick="event.preventDefault();changeFavorite({{ $product->id }})">
+                                    <i class="fa fa-heart-o"></i>
+                                </a>
+                            @else
+                                <a href="#" id="{{ $product->id }}" data-toggle="tooltip" title="حذف از علاقه مندی ها" onClick="event.preventDefault();changeUnFavorite({{ $product->id }})">
+                                    <i class="fa fa-heart"></i>
+                                </a>
+                            @endif
+                    @endif
                     <button type="button" data-toggle="tooltip" title="افزودن به مقایسه" onClick=""><i
                             class="fa fa-exchange"></i></button>
                 </div>
@@ -70,3 +79,42 @@
 
 
 </div>
+
+
+<script type="text/javascript">
+
+    function changeFavorite(id){
+           console.log(id);
+          var url = /favorite/+id;
+          $.ajax({
+              url: url,
+              type: "GET",
+              success:function (response){
+                  if (response.status) {
+                      console.log(response.status);
+                     $("#"+id +'>i').removeClass('fa-heart-o').addClass('fa-heart');
+                      $("#"+id).attr('title' , response.message);
+                  }
+              },
+
+          })
+    }
+    function changeUnFavorite(id){
+
+        var url = '/unFavorite/'+ id;
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success:function (response){
+
+                console.log(response.status)
+                 if(response.status){
+                     $("#"+id +'>i').removeClass('fa-heart').addClass('fa-heart-o');
+                     $("#"+id).attr('title' , response.message);
+                 }
+            },
+
+        })
+    }
+</script>

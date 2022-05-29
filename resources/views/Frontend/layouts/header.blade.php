@@ -276,9 +276,9 @@
                             <ul>
                                 <li><a href="{{ route('login') }}">ورود</a></li>
                                 <li><a href="{{ route('register') }}">ثبت نام</a></li>
-                                <li><a href="compare.html">مقایسه</a></li>
+                                <li><a href="{{ route('compare') }}">مقایسه</a></li>
                                 <li><a href="{{ route('showFavorites') }}">لیست آرزو</a></li>
-                                <li><a href="search.html">جستجو</a></li>
+                                <li><a href="{{ route('searchPage') }}">جستجو</a></li>
                             </ul>
                             <ul>
                                 <li><a href="{{ route('about') }}">درباره ما</a></li>

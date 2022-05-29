@@ -8,7 +8,7 @@
             <!--Middle Part Start-->
             <div id="content">
                 <?php echo $__env->make('admin.layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
+       
                 <div id="attributes" data-attributes="<?php echo e(json_encode(\App\Models\Attribute::all()->pluck('name'))); ?>"></div>
                 <form class="form-horizontal" action="<?php echo e(route('admin.products.update',$product->id)); ?>" method="post" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>

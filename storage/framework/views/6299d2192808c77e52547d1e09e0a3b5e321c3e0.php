@@ -20,33 +20,42 @@
                                     <span class="price-new"><?php echo e($product->price); ?> تومان</span>
                                 <?php endif; ?>
                             </p>
-                            <div class="rating">
+                            <?php
+                            $ratings = $product->ratings;
+                            if ($ratings->count() > 0) {
+
+                            $ratingCount = $ratings->count();
+                            $stars_rated = 0 ;
+                            foreach ($ratings as $rating){
+                                $stars = $rating->stars_rated;
+                                $stars_rated += $stars;
+                             }
+                                $avgRatingProduct = ceil($stars_rated/$ratingCount);
+                            }
+                        ?>
+                       <?php if($ratings->count() > 0): ?>
+                        <div class="rating">
+
+                            <?php for($i=1;$i<=$avgRatingProduct;$i++): ?>
                                 <span class="fa fa-stack">
                                     <i class="fa fa-star fa-stack-2x"></i>
                                     <i class="fa fa-star-o fa-stack-2x"></i>
                                 </span>
-                                <span class="fa fa-stack">
-                                    <i class="fa fa-star fa-stack-2x"></i>
-                                    <i class="fa fa-star-o fa-stack-2x"></i>
-                                </span>
-                                <span class="fa fa-stack">
-                                    <i class="fa fa-star fa-stack-2x"></i>
-                                    <i class="fa fa-star-o fa-stack-2x"></i>
-                                </span>
-                                <span class="fa fa-stack">
-                                    <i class="fa fa-star fa-stack-2x"></i>
-                                    <i class="fa fa-star-o fa-stack-2x"></i>
-                                </span>
+                            <?php endfor; ?>
+                            <?php for($i>$avgRatingProduct;$i<=5;$i++): ?>
                                 <span class="fa fa-stack">
                                     <i class="fa fa-star-o fa-stack-2x"></i>
                                 </span>
-                            </div>
+                            <?php endfor; ?>
+                        </div>
+                       <?php endif; ?>
                         </div>
 
                         <div class="button-group">
-                            <button class="btn-primary" type="button" onClick="cart.add('49');">
-                                <span>افزودن به سبد</span>
-                            </button>
+                            <form action="<?php echo e(route('cart.add',$product->id)); ?>" method="post">
+                                <?php echo csrf_field(); ?>
+                                <button type="submit" class="btn btn-primary btn-lg">افزودن به سبد</button>
+                            </form>
                             <div class="add-to-links">
                                 <?php if(Auth::check()): ?>
 
@@ -63,9 +72,12 @@
                                     <?php endif; ?>
                                 <?php endif; ?>
 
-                                <button type="button" data-toggle="tooltip" title="مقایسه این محصول" onClick="">
-                                    <i class="fa fa-exchange"></i>
-                                </button>
+                                <form action="<?php echo e(route('addCompare',$product->id)); ?>" method="post">
+                                    <?php echo csrf_field(); ?>
+                                   <button type="submit" data-toggle="tooltip" title="مقایسه این محصول">
+                                        <i class="fa fa-exchange"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>

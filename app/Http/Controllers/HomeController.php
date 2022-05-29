@@ -67,17 +67,8 @@ class HomeController extends Controller
 
     }
 
-    public function search()
-    {
-        $products = Product::query();
-        if ($keyword = \request('search')) {
-            $products->where('name','LIKE',"%{$keyword}%")->orWhere('description','LIKE',"%{$keyword}%")->get();
 
-        }
-
-        $products = $products->latest()->paginate(12);
-        return view('Frontend.home.products',compact('products'));
-    }
+    
 
 
 

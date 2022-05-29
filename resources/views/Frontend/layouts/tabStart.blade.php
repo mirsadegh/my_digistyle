@@ -12,14 +12,14 @@
         <div class="owl-carousel product_carousel_tab">
 
             @foreach ($amazing_sales as $amazing_sale)
-            <div class="product-thumb clearfix">
+                <div class="product-thumb clearfix">
                     <div class="image">
                         <a href="/products/{{ $amazing_sale->product_id }}">
                             <img src="{{ $amazing_sale->product->image }}"  title="{{ $amazing_sale->product->name }}" class="img-responsive" width="180" />
                         </a>
                     </div>
                     <div class="caption">
-                        <h4><a href="#">{{ $amazing_sale->product->name }}</a></h4>
+                        <h4><a href="{{ route('singleProduct',$amazing_sale->product_id) }}">{{ $amazing_sale->product->name }}</a></h4>
                         <p class="price">
                             <span class="price-new">
                                 {{ number_format($amazing_sale->product->price - ($amazing_sale->percentage/100 * $amazing_sale->product->price))  }} تومان
@@ -78,9 +78,13 @@
                                 </a>
                             @endif
                         @endif
-                            <button type="button" data-toggle="tooltip" title="مقایسه این محصول" onClick="">
+                          <form action="{{ route('addCompare',$amazing_sale->product->id) }}" method="post">
+                            @csrf
+                           <button type="submit" data-toggle="tooltip" title="مقایسه این محصول">
                                 <i class="fa fa-exchange"></i>
                             </button>
+                          </form>
+
                         </div>
                     </div>
                 </div>
@@ -161,7 +165,12 @@
                                 @endif
                             @endif
 
-                            <button type="button" data-toggle="tooltip" title="افزودن به مقایسه" onClick=""><i class="fa fa-exchange"></i></button>
+                            <form action="{{ route('addCompare',$product->id) }}" method="post">
+                                @csrf
+                               <button type="submit" data-toggle="tooltip" title="مقایسه این محصول">
+                                    <i class="fa fa-exchange"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -236,39 +245,3 @@
 </div>
 
 
-<script type="text/javascript">
-
-            function changeFavorite(id){
-                  var url = /favorite/+id;
-                  $.ajax({
-                      url: url,
-                      type: "GET",
-                      success:function (response){
-                          console.log(response.status);
-                          if (response.status) {
-                             $("#"+id +'>i').removeClass('fa-heart-o').addClass('fa-heart');
-                              $("#"+id).attr('title' , response.message);
-                          }
-                      },
-
-                  })
-            }
-            function changeUnFavorite(id){
-
-                var url = '/unFavorite/'+ id;
-
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    success:function (response){
-
-                        console.log(response.status)
-                         if(response.status){
-                             $("#"+id +'>i').removeClass('fa-heart').addClass('fa-heart-o');
-                             $("#"+id).attr('title' , response.message);
-                         }
-                    },
-
-                })
-            }
-</script>

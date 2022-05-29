@@ -42,6 +42,7 @@
     38 => 'App\\Providers\\EventServiceProvider',
     39 => 'App\\Providers\\RouteServiceProvider',
     40 => 'App\\Helpers\\Cart\\CartServiceProvider',
+    41 => 'App\\Helpers\\Compare\\CompareServiceProvider',
   ),
   'eager' => 
   array (
@@ -72,6 +73,7 @@
     24 => 'App\\Providers\\EventServiceProvider',
     25 => 'App\\Providers\\RouteServiceProvider',
     26 => 'App\\Helpers\\Cart\\CartServiceProvider',
+    27 => 'App\\Helpers\\Compare\\CompareServiceProvider',
   ),
   'deferred' => 
   array (

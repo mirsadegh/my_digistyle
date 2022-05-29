@@ -23,7 +23,10 @@ Route::get('/contact',[\App\Http\Controllers\HomeController::class,'contact'])->
 Route::get('/home', [\App\Http\Controllers\HomeController::class,'home'])->name('home');
 Route::get('/api/cities/{provinceId}',[\App\Http\Controllers\Auth\RegisterController::class,'getAllCites']);
 
-Route::post('search',[\App\Http\Controllers\HomeController::class,'search'])->name('search');
+Route::post('search',[\App\Http\Controllers\SearchController::class,'search'])->name('search');
+Route::get('searchPage',[\App\Http\Controllers\SearchController::class,'searchPage'])->name('searchPage');
+Route::post('searchPage',[\App\Http\Controllers\SearchController::class,'searchPages']);
+Route::post('search/sort',[\App\Http\Controllers\SearchController::class,'sortSearch'])->name('sort.search');
 
 Auth::routes(['verify'=>true]);
 Route::get('/secret',function (){
@@ -43,6 +46,12 @@ Route::delete('cart/delete/{cart}',[\App\Http\Controllers\CartController::class,
 Route::patch('cart/quantity/change',[\App\Http\Controllers\CartController::class,'quantityChange']);
 Route::post('discount/check',[\App\Http\Controllers\DiscountController::class,'check'])->name('cart.discount.check');
 Route::delete('discount/delete',[\App\Http\Controllers\DiscountController::class,'destroy']);
+
+Route::get('compare',[\App\Http\Controllers\CompareController::class,'compare'])->name('compare');
+Route::post('compare/add/{product}',[\App\Http\Controllers\CompareController::class,'addCompare'])->name('addCompare');
+Route::delete('compare/delete/{product}',[\App\Http\Controllers\CompareController::class,'deleteCompare'])->name('deleteCompare');
+
+
 
 Route::get('/showFavorites',[\App\Http\Controllers\FavoriteController::class,'showFavorites'])->name('showFavorites');
 Route::get('/favorite/{product}',[\App\Http\Controllers\FavoriteController::class,'favoriteProduct'])->name('favorite');

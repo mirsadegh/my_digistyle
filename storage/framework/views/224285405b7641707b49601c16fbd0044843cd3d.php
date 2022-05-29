@@ -12,14 +12,14 @@
         <div class="owl-carousel product_carousel_tab">
 
             <?php $__currentLoopData = $amazing_sales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $amazing_sale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="product-thumb clearfix">
+                <div class="product-thumb clearfix">
                     <div class="image">
                         <a href="/products/<?php echo e($amazing_sale->product_id); ?>">
                             <img src="<?php echo e($amazing_sale->product->image); ?>"  title="<?php echo e($amazing_sale->product->name); ?>" class="img-responsive" width="180" />
                         </a>
                     </div>
                     <div class="caption">
-                        <h4><a href="#"><?php echo e($amazing_sale->product->name); ?></a></h4>
+                        <h4><a href="<?php echo e(route('singleProduct',$amazing_sale->product_id)); ?>"><?php echo e($amazing_sale->product->name); ?></a></h4>
                         <p class="price">
                             <span class="price-new">
                                 <?php echo e(number_format($amazing_sale->product->price - ($amazing_sale->percentage/100 * $amazing_sale->product->price))); ?> تومان
@@ -78,9 +78,13 @@
                                 </a>
                             <?php endif; ?>
                         <?php endif; ?>
-                            <button type="button" data-toggle="tooltip" title="مقایسه این محصول" onClick="">
+                          <form action="<?php echo e(route('addCompare',$amazing_sale->product->id)); ?>" method="post">
+                            <?php echo csrf_field(); ?>
+                           <button type="submit" data-toggle="tooltip" title="مقایسه این محصول">
                                 <i class="fa fa-exchange"></i>
                             </button>
+                          </form>
+
                         </div>
                     </div>
                 </div>
@@ -236,40 +240,4 @@
 </div>
 
 
-<script type="text/javascript">
-
-            function changeFavorite(id){
-                  var url = /favorite/+id;
-                  $.ajax({
-                      url: url,
-                      type: "GET",
-                      success:function (response){
-                          console.log(response.status);
-                          if (response.status) {
-                             $("#"+id +'>i').removeClass('fa-heart-o').addClass('fa-heart');
-                              $("#"+id).attr('title' , response.message);
-                          }
-                      },
-
-                  })
-            }
-            function changeUnFavorite(id){
-
-                var url = '/unFavorite/'+ id;
-
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    success:function (response){
-
-                        console.log(response.status)
-                         if(response.status){
-                             $("#"+id +'>i').removeClass('fa-heart').addClass('fa-heart-o');
-                             $("#"+id).attr('title' , response.message);
-                         }
-                    },
-
-                })
-            }
-</script>
 <?php /**PATH /home/sadegh/Desktop/project/my_digistyle/resources/views/Frontend/layouts/tabStart.blade.php ENDPATH**/ ?>

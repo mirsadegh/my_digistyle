@@ -8,7 +8,7 @@
             <!--Middle Part Start-->
             <div id="content">
                 @include('admin.layouts.errors')
-
+       
                 <div id="attributes" data-attributes="{{ json_encode(\App\Models\Attribute::all()->pluck('name')) }}"></div>
                 <form class="form-horizontal" action="{{ route('admin.products.update',$product->id) }}" method="post" enctype="multipart/form-data">
                     @csrf

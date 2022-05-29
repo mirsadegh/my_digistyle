@@ -276,9 +276,9 @@
                             <ul>
                                 <li><a href="<?php echo e(route('login')); ?>">ورود</a></li>
                                 <li><a href="<?php echo e(route('register')); ?>">ثبت نام</a></li>
-                                <li><a href="compare.html">مقایسه</a></li>
+                                <li><a href="<?php echo e(route('compare')); ?>">مقایسه</a></li>
                                 <li><a href="<?php echo e(route('showFavorites')); ?>">لیست آرزو</a></li>
-                                <li><a href="search.html">جستجو</a></li>
+                                <li><a href="<?php echo e(route('searchPage')); ?>">جستجو</a></li>
                             </ul>
                             <ul>
                                 <li><a href="<?php echo e(route('about')); ?>">درباره ما</a></li>
