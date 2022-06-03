@@ -11,7 +11,7 @@
                     <div class="card-tools d-flex">
                         <div class="btn-group-sm ml-2">
                             <a href="{{ route('admin.users.create') }}" class="btn btn-info">ایجاد کاربر جدید</a>
-                            <a href="{{ request()->fullUrlWithQuery(['admin' => 1 ]) }}" class="btn btn-warning">کاربران مدیر</a>
+                            {{-- <a href="{{ request()->fullUrlWithQuery(['admin' => 1 ]) }}" class="btn btn-warning">کاربران مدیر</a> --}}
                         </div>
                         <form action="">
                             <div class="input-group input-group-sm" style="width: 150px">
@@ -37,7 +37,7 @@
                         </tr>
                         @foreach($users as $user)
                             <tr class="text-center">
-                                <td>{{ $user->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 @if($user->email_verified_at)
@@ -45,23 +45,25 @@
                                 @else
                                     <td><span class="badge badge-danger">غیرفعال</span></td>
                                 @endif
-                                @if($user->isSuperUser())
-                                    <td><span class="badge badge-dark">کاربر مدیر</span></td>
-                                @elseif($user->isStuffUser())
-                                    <td><span class="badge badge-success">کاربر کارمند</span></td>
-                                @else
-                                    <td><span class="badge badge-primary">کاربر معمولی</span></td>
-                                @endif
+
+                                    <td><span class="badge badge-primary">{{ $user->role->label ?? '' }}</span></td>
+
 
                                 <td class="d-flex">
-                                        <form action="{{ route('admin.users.destroy',['user' => $user->id]) }}" method="post">
+                                     @can('delete-user')
+                                       <form action="{{ route('admin.users.destroy',['user' => $user->id]) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger delete ml-1">حذف</button>
                                         </form>
+                                     @endcan
 
+                                     @can('edit-user')
                                         <a href="{{ route('admin.users.edit',['user' => $user->id]) }}" class="btn btn-sm btn-primary ml-1">ویرایش</a>
-
+                                     @endcan
+                                     @can('show-roles')
+                                     <a href="{{ route('admin.users.roles', $user->id) }}" class="btn btn-sm btn-warning ml-1">انتخاب مقام</a>
+                                     @endcan
                                 </td>
                             </tr>
                         @endforeach

@@ -55,19 +55,22 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function isStuffUser()
-    {
-        return $this->is_stuff;
-    }
 
     public function isSuperUser()
     {
-        return $this->is_admin;
+            if($this->role == null)return false;
+            if($this->role->name == "super-admin")return true;
+    }
+
+    public function isAuthAdminPanel()
+    {
+             if($this->role == null)return false;
+             if($this->role->name ) return true;
     }
 
     public function isNormalUser()
     {
-        return (! $this->isSuperUser() &&  ! $this->isStuffUser());
+        if($this->role == null)return true;
     }
 
     public function comments()
@@ -92,5 +95,24 @@ class User extends Authenticatable implements MustVerifyEmail
     public function favorites()
     {
         return $this->belongsToMany(Product::class,'favorites','user_id','product_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasRole($roles)
+    {
+           foreach($roles as $role){
+               $res = ($this->role->name == $role->name);
+           }
+          return $res;
+    }
+
+    public function hasPermission($permission)
+    {
+
+          return $this->hasRole($permission->roles);
     }
 }

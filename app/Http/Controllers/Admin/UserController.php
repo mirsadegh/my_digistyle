@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:show-users')->only('index');
+        $this->middleware('can:create-user')->only(['create','store']);
+        $this->middleware('can:edit-user')->only(['edit','update']);
+        $this->middleware('can:delete-user')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +30,10 @@ class UserController extends Controller
         if ($keyword = \request('search')){
            $users->where('name','LIKE',"%{$keyword}%")->orWhere('email','LIKE',"%{$keyword}%")->orWhere('id', $keyword);
         }
-        if (\request('admin')){
-            $users->where('is_admin',1)->orWhere('is_stuff',1);
-        }
+        // if (\request('admin')){
+
+        //     $users->where('is_admin',1)->orWhere('is_stuff',1);
+        // }
         $users = $users->latest()->paginate(10);
         return view('admin.users.all',compact('users'));
     }
@@ -36,7 +45,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $provinces= \App\Models\Province::all(); 
+        $provinces= \App\Models\Province::all();
         return view('admin.users.create',compact('provinces'));
     }
 
@@ -49,7 +58,7 @@ class UserController extends Controller
     public function store(RegisterUserRequest $request)
     {
 
-        
+
         $user = new User();
         $user->name = $request->input('name');
         $user->lastname = $request->input('lastname');
@@ -63,19 +72,19 @@ class UserController extends Controller
         $user->password = $request->input('password');
         $user->agree = 1;
 
-        if($request->user_role == 1){
-             $user->is_stuff = 1;
-        }elseif ($request->user_role == 2){
-            $user->is_admin = 1;
-        }
+        // if($request->user_role == 1){
+        //      $user->is_stuff = 1;
+        // }elseif ($request->user_role == 2){
+        //     $user->is_admin = 1;
+        // }
 
         if($request->has('verify')){
             $user->markEmailAsVerified();
         }
         $user->save();
-        
+
         alert()->success('کاربر با موفقیت ایجاد گردید','ثبت کاربر');
-              
+
         return redirect(route('admin.users.index'));
     }
 
@@ -88,7 +97,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $provinces= \App\Models\Province::all(); 
+        $provinces= \App\Models\Province::all();
         return view('admin.users.edit',compact(['user','provinces']));
     }
 
@@ -101,14 +110,14 @@ class UserController extends Controller
      */
     public function update(EditUserRequest $request, User $user)
     {
-       
+
         if($request->has('verify')){
                 $user->markEmailAsVerified();
             }
-          
+
         if($user->email != $request->email) {
                $user->email_verified_at = null;
-          } 
+          }
         $user->update($request->all());
 
         if($request->user_role == 1){

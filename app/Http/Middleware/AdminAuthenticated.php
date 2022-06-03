@@ -16,9 +16,11 @@ class AdminAuthenticated
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->isSuperUser() || $request->user()->isStuffUser() ){
+        if ($request->user()->isAuthAdminPanel()){
             return $next($request);
         }
         return redirect('/');
+
+        // return $next($request);
     }
 }

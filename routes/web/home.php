@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+use App\Models\Permission;
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::get('/',function(){
 
+//      $permission = Permission::find(8);
+//     dd(auth()->user()->hasPermission($permission));
+
+// });
 
 Route::get('/', [\App\Http\Controllers\HomeController::class,'index'])->name('index');
 Route::get('/404', [\App\Http\Controllers\HomeController::class,'notFound'])->name('notFound');

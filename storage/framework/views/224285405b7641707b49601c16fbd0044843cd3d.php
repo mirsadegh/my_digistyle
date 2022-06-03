@@ -165,7 +165,12 @@
                                 <?php endif; ?>
                             <?php endif; ?>
 
-                            <button type="button" data-toggle="tooltip" title="افزودن به مقایسه" onClick=""><i class="fa fa-exchange"></i></button>
+                            <form action="<?php echo e(route('addCompare',$product->id)); ?>" method="post">
+                                <?php echo csrf_field(); ?>
+                               <button type="submit" data-toggle="tooltip" title="مقایسه این محصول">
+                                    <i class="fa fa-exchange"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

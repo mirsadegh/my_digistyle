@@ -11,7 +11,7 @@
                     <div class="card-tools d-flex">
                         <div class="btn-group-sm ml-2">
                             <a href="<?php echo e(route('admin.users.create')); ?>" class="btn btn-info">ایجاد کاربر جدید</a>
-                            <a href="<?php echo e(request()->fullUrlWithQuery(['admin' => 1 ])); ?>" class="btn btn-warning">کاربران مدیر</a>
+                            
                         </div>
                         <form action="">
                             <div class="input-group input-group-sm" style="width: 150px">
@@ -37,7 +37,7 @@
                         </tr>
                         <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr class="text-center">
-                                <td><?php echo e($user->id); ?></td>
+                                <td><?php echo e($loop->iteration); ?></td>
                                 <td><?php echo e($user->name); ?></td>
                                 <td><?php echo e($user->email); ?></td>
                                 <?php if($user->email_verified_at): ?>
@@ -45,23 +45,25 @@
                                 <?php else: ?>
                                     <td><span class="badge badge-danger">غیرفعال</span></td>
                                 <?php endif; ?>
-                                <?php if($user->isSuperUser()): ?>
-                                    <td><span class="badge badge-dark">کاربر مدیر</span></td>
-                                <?php elseif($user->isStuffUser()): ?>
-                                    <td><span class="badge badge-success">کاربر کارمند</span></td>
-                                <?php else: ?>
-                                    <td><span class="badge badge-primary">کاربر معمولی</span></td>
-                                <?php endif; ?>
+
+                                    <td><span class="badge badge-primary"><?php echo e($user->role->label ?? ''); ?></span></td>
+
 
                                 <td class="d-flex">
-                                        <form action="<?php echo e(route('admin.users.destroy',['user' => $user->id])); ?>" method="post">
+                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-user')): ?>
+                                       <form action="<?php echo e(route('admin.users.destroy',['user' => $user->id])); ?>" method="post">
                                             <?php echo csrf_field(); ?>
                                             <?php echo method_field('DELETE'); ?>
                                             <button type="submit" class="btn btn-sm btn-danger delete ml-1">حذف</button>
                                         </form>
+                                     <?php endif; ?>
 
+                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit-user')): ?>
                                         <a href="<?php echo e(route('admin.users.edit',['user' => $user->id])); ?>" class="btn btn-sm btn-primary ml-1">ویرایش</a>
-
+                                     <?php endif; ?>
+                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-roles')): ?>
+                                     <a href="<?php echo e(route('admin.users.roles', $user->id)); ?>" class="btn btn-sm btn-warning ml-1">انتخاب مقام</a>
+                                     <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

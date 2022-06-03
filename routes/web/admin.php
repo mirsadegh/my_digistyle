@@ -1,4 +1,8 @@
 <?php
+
+
+
+
 Route::get('/',function (){
       return view('admin.dashboard.index');
 });
@@ -19,3 +23,9 @@ Route::get('/changeUnApproved/{id}',[\App\Http\Controllers\Admin\CommentControll
 Route::resource('categories',\App\Http\Controllers\Admin\CategoryController::class)->except('show');
 Route::post('attribute/values',[\App\Http\Controllers\Admin\AttributeController::class,'getValues']);
 Route::resource('discounts',\App\Http\Controllers\Admin\DiscountController::class)->except('show');
+
+Route::resource('permissions', App\Http\Controllers\Admin\PermissionController::class);
+Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
+
+Route::get('/users/{user}/role',[App\Http\Controllers\Admin\SelectRoleController::class,'create'])->name('users.roles');
+Route::post('/users/{user}/role',[App\Http\Controllers\Admin\SelectRoleController::class,'store'])->name('users.roles.store');
