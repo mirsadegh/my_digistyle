@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\RegisterRequest;
 use App\Models\City;
-use App\Models\Province;
-use App\Providers\RouteServiceProvider;
+use App\Models\Role;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\JsonResponse;
+use App\Models\Province;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegisterRequest;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
+use App\Notifications\NewUserRegistered;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -92,10 +94,19 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-         
-        
+
+
           $user = User::create($request->all());
           $this->guard()->login($user);
+
+          $details = [
+             'message' => "  یک کاربر جدید به نام " . $user->name . " در سایت ثبت نام کرد.",
+          ];
+          $superRole = Role::where('name','super-admin')->first();
+          $adminUsers = $superRole->users;
+          $adminUsers->each(function ($adminUser)use($details){
+              $adminUser->notify(new NewUserRegistered($details));
+          });
 
           return redirect('/');
     }

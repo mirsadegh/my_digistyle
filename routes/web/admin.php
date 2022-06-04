@@ -1,8 +1,6 @@
 <?php
 
 
-
-
 Route::get('/',function (){
       return view('admin.dashboard.index');
 });
@@ -29,3 +27,5 @@ Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
 
 Route::get('/users/{user}/role',[App\Http\Controllers\Admin\SelectRoleController::class,'create'])->name('users.roles');
 Route::post('/users/{user}/role',[App\Http\Controllers\Admin\SelectRoleController::class,'store'])->name('users.roles.store');
+
+Route::post('notification/read-all',[App\Http\Controllers\Admin\NotificationController::class,'readAll'])->name('notification.readAll');

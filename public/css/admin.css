@@ -10384,7 +10384,7 @@ body,
 
 .dropdown-menu-lg {
   min-width: 280px;
-  max-width: 300px;
+  /* max-width: 300px; */
   padding: 0;
 }
 
@@ -13375,7 +13375,7 @@ ul {
     border-radius: 4px;
     width: 140px;
     height: 34px;
-  
+
     text-align: center;
     color: #676767;
 }

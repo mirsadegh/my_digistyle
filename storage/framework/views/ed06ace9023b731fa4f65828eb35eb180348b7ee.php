@@ -85,33 +85,48 @@
             </div>
         </li>
         <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" id="toggle-notify">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fa fa-bell-o"></i>
-                <span class="badge badge-warning navbar-badge">15</span>
+                <span class="badge badge-warning navbar-badge">
+                    <?php if($notifications !== 0): ?>
+                             <?php echo e($notifications->count()); ?>
+
+                    <?php endif; ?>
+                </span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
-                <span class="dropdown-item dropdown-header">15 نوتیفیکیشن</span>
+                <span class="dropdown-item dropdown-header">
+                    <?php if($notifications !== 0): ?>
+                    <?php echo e($notifications->count()); ?>
+
+                    <?php endif; ?>
+                    نوتیفیکیشن
+                </span>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fa fa-envelope ml-2"></i> 4 پیام جدید
-                    <span class="float-left text-muted text-sm">3 دقیقه</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fa fa-users ml-2"></i> 8 درخواست دوستی
-                    <span class="float-left text-muted text-sm">12 ساعت</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fa fa-file ml-2"></i> 3 گزارش جدید
-                    <span class="float-left text-muted text-sm">2 روز</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">مشاهده همه نوتیفیکیشن</a>
+                <?php $__currentLoopData = $notifications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <a href="#" class="dropdown-item">
+
+                        <span><?php echo e($notification['data']['message']); ?></span>
+                        <span class="float-left text-muted text-sm"><?php echo e(jdate($notification->created_at)->ago()); ?></span>
+                    </a>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
         </li>
 
     </ul>
 </nav>
+<script>
+        toggleNotify = document.getElementById('toggle-notify');
+         toggleNotify.addEventListener('click',function(){
+             $.ajax({
+                 type: 'POST',
+                 url: 'admin/notification/read-all',
+                 data: {_token: "<?php echo e(csrf_token()); ?>" },
+                 success:function(){
+                     console.log('yes');
+                 }
+             })
+         })
+</script>
 <?php /**PATH /home/sadegh/Desktop/project/my_digistyle/resources/views/admin/layouts/nav.blade.php ENDPATH**/ ?>

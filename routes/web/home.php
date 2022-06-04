@@ -1,7 +1,8 @@
 <?php
 
-use App\Models\Permission;
+use App\Models\Role;
 
+use App\Models\Permission;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 
@@ -16,9 +17,6 @@ use App\Http\Controllers\CategoryController;
 |
 */
 // Route::get('/',function(){
-
-//      $permission = Permission::find(8);
-//     dd(auth()->user()->hasPermission($permission));
 
 // });
 
